@@ -13,7 +13,7 @@
     "testRunner": "jest-circus/runner"
   },
   "scripts": {
-    "test": "npx jest"
+    "test": "npx jest --bail"
   },
   "repository": {
     "type": "git",

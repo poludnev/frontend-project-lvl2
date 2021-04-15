@@ -10,7 +10,7 @@
   "jest": {
     "testEnvironment": "node",
     "transform": {},
-    "verbose": true
+    "testRunner": "jest-circus/runner"
   },
   "scripts": {
     "test": "npx jest"

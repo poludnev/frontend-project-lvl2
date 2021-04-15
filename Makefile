@@ -1,19 +1,22 @@
-# Makefile
+# Makefil
+install: install-deps
 
-diff:
-	node bin/gendiff.js
+run:
+	bin/nodejs-package.js 10
 
-publish:
-	npm publish --dry-run
-
-diff1:
-	gendiff -h
+install-deps:
+	npm ci
 
 test:
-	npm test --watch
+	npm test
 
 test-coverage:
 	npm test -- --coverage --coverageProvider=v8
 
 lint:
 	npx eslint .
+
+publish:
+	npm publish
+
+.PHONY: test

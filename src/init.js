@@ -18,8 +18,11 @@ const makeKeyStatusPairs = (key, data1 = {}, data2 = {}) => {
 
 const render = (file1Name = '', file2Name = '') => {
   const currentDirectoryPath = process.cwd();
-  const file1Content = fs.readFileSync(path.resolve(currentDirectoryPath, file1Name), 'utf-8');
-  const file2Content = fs.readFileSync(path.resolve(currentDirectoryPath, file2Name), 'utf-8');
+  const filePath1 = path.resolve(currentDirectoryPath, file1Name);
+  const filePath2 = path.resolve(currentDirectoryPath, file2Name);
+
+  const file1Content = fs.readFileSync(filePath1, 'utf-8');
+  const file2Content = fs.readFileSync(filePath2, 'utf-8');
 
   const parsedFile1 = JSON.parse(file1Content);
   const parsedFile2 = JSON.parse(file2Content);

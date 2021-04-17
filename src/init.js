@@ -16,10 +16,11 @@ const makeKeyStatusPairs = (key, data1 = {}, data2 = {}) => {
   return [key, status];
 };
 
-const render = (file1Name = '', file2Name = '') => {
+const render = (file1 = '', file2 = '') => {
+  if (file1.length === 0 || file2.length === 0) return 'error';
   const currentDirectoryPath = process.cwd();
-  const filePath1 = path.resolve(currentDirectoryPath, file1Name);
-  const filePath2 = path.resolve(currentDirectoryPath, file2Name);
+  const filePath1 = path.resolve(currentDirectoryPath, file1);
+  const filePath2 = path.resolve(currentDirectoryPath, file2);
 
   const file1Content = fs.readFileSync(filePath1, 'utf-8');
   const file2Content = fs.readFileSync(filePath2, 'utf-8');

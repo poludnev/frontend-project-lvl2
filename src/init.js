@@ -3,48 +3,38 @@ import _ from 'lodash';
 import * as fs from 'fs';
 import * as path from 'path';
 
-const fn = (val) => {
+const makeKeyStatusPairs = (key, data1 = {}, data2 = {}) => {
   let status = 'equal';
 
-  if (!parsedF2[val]) {
+  if (!data2[key]) {
     status = 'deleted';
-  } else if (!parsedF1[val]) {
+  } else if (!data1[key]) {
     status = 'added';
-  } else if (parsedF2[val] !== parsedF1[val]) {
+  } else if (data2[key] !== data1[key]) {
     status = 'changed';
   }
-  return [val, status];
+  return [key, status];
 };
 
-const render = (file1 = '', file2 = '') => {
-  if (file1.length < 1 || file2.length < 1) return 'empty file path';
-  const currentDirectory = process.cwd();
-  const f1 = fs.readFileSync(path.resolve(currentDirectory, file1), 'utf-8');
-  const f2 = fs.readFileSync(path.resolve(currentDirectory, file2), 'utf-8');
+const render = (file1Name = '', file2Name = '') => {
+  const currentDirectoryPath = process.cwd();
+  const file1Content = fs.readFileSync(path.resolve(currentDirectoryPath, file1Name), 'utf-8');
+  const file2Content = fs.readFileSync(path.resolve(currentDirectoryPath, file2Name), 'utf-8');
 
-  const parsedF1 = JSON.parse(f1);
-  const parsedF2 = JSON.parse(f2);
-  const f1Keys = Object.keys(parsedF1);
-  const f2Keys = Object.keys(parsedF2);
-  const keys = _.union(f1Keys, f2Keys).sort();
+  const parsedFile1 = JSON.parse(file1Content);
+  const parsedFile2 = JSON.parse(file2Content);
+  const file1Keys = Object.keys(JSON.parse(file1Content));
+  const file2Keys = Object.keys(JSON.parse(file2Content));
+  const commonKeys = _.union(file1Keys, file2Keys).sort();
 
-  const result = keys
-    .map(fn)
-    .reduce((acc, val) => {
-      if (val[1] === 'deleted') {
-        acc.push(`  - ${val[0]}: ${parsedF1[val[0]]}`);
-      }
-      if (val[1] === 'equal') {
-        acc.push(`    ${val[0]}: ${parsedF1[val[0]]}`);
-      }
-      if (val[1] === 'changed') {
-        acc.push(`  - ${val[0]}: ${parsedF1[val[0]]}`, `  + ${val[0]}: ${parsedF2[val[0]]}`);
-      }
-      if (val[1] === 'added') {
-        acc.push(`  + ${val[0]}: ${parsedF2[val[0]]}`);
-      }
-      return acc;
-    }, [])
+  const result = commonKeys
+    .map((key) => makeKeyStatusPairs(key, parsedFile1, parsedFile2))
+    .map(([key, status]) => {
+      if (status === 'deleted') return `  - ${key}: ${parsedFile1[key]}`;
+      if (status === 'equal') return `    ${key}: ${parsedFile1[key]}`;
+      if (status === 'changed') return `  - ${key}: ${parsedFile1[key]}\n  + ${key}: ${parsedFile2[key]}`;
+      if (status === 'added') return `  + ${key}: ${parsedFile2[key]}`;
+    })
     .join('\n');
   console.log(`{\n${result}\n}`);
 };

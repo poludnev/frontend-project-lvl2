@@ -34,9 +34,9 @@ const render = (file1Name = '', file2Name = '') => {
     .map((key) => makeKeyStatusPairs(key, parsedFile1, parsedFile2))
     .map(([key, status]) => {
       if (status === 'deleted') return `  - ${key}: ${parsedFile1[key]}`;
-      if (status === 'equal') return `    ${key}: ${parsedFile1[key]}`;
       if (status === 'changed') return `  - ${key}: ${parsedFile1[key]}\n  + ${key}: ${parsedFile2[key]}`;
       if (status === 'added') return `  + ${key}: ${parsedFile2[key]}`;
+      return `    ${key}: ${parsedFile1[key]}`;
     })
     .join('\n');
   console.log(`{\n${result}\n}`);

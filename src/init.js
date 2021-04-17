@@ -17,7 +17,7 @@ const makeKeyStatusPairs = (key, data1 = {}, data2 = {}) => {
 };
 
 const render = (file1 = '', file2 = '') => {
-  if (file1.length === 0 || file2.length === 0) return 'error';
+  if (file1.length === 0 || file2.length === 0) return 'empty file path';
   const currentDirectoryPath = process.cwd();
   const filePath1 = path.resolve(currentDirectoryPath, file1);
   const filePath2 = path.resolve(currentDirectoryPath, file2);

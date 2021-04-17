@@ -3,10 +3,24 @@ import _ from 'lodash';
 import * as fs from 'fs';
 import * as path from 'path';
 
+const fn = (val) => {
+  let status = 'equal';
+
+  if (!parsedF2[val]) {
+    status = 'deleted';
+  } else if (!parsedF1[val]) {
+    status = 'added';
+  } else if (parsedF2[val] !== parsedF1[val]) {
+    status = 'changed';
+  }
+  return [val, status];
+};
+
 const render = (file1 = '', file2 = '') => {
   if (file1.length < 1 || file2.length < 1) return 'empty file path';
-  const f1 = fs.readFileSync(path.resolve(process.cwd(), file1), 'utf-8');
-  const f2 = fs.readFileSync(path.resolve(process.cwd(), file2), 'utf-8');
+  const currentDirectory = process.cwd();
+  const f1 = fs.readFileSync(path.resolve(currentDirectory, file1), 'utf-8');
+  const f2 = fs.readFileSync(path.resolve(currentDirectory, file2), 'utf-8');
 
   const parsedF1 = JSON.parse(f1);
   const parsedF2 = JSON.parse(f2);
@@ -14,18 +28,6 @@ const render = (file1 = '', file2 = '') => {
   const f2Keys = Object.keys(parsedF2);
   const keys = _.union(f1Keys, f2Keys).sort();
 
-  const fn = (val) => {
-    let status = 'equal';
-
-    if (!parsedF2[val]) {
-      status = 'deleted';
-    } else if (!parsedF1[val]) {
-      status = 'added';
-    } else if (parsedF2[val] !== parsedF1[val]) {
-      status = 'changed';
-    }
-    return [val, status];
-  };
   const result = keys
     .map(fn)
     .reduce((acc, val) => {
@@ -57,8 +59,6 @@ const firstRun = () => {
     .option('-f --format [type]', 'output format')
     .action(render);
   program.parse(process.argv);
-  // console.log(process.cwd());
-  // console.log(path.resolve());
 };
 
 export { render };

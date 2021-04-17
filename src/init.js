@@ -41,6 +41,7 @@ const render = (file1 = '', file2 = '') => {
     })
     .join('\n');
   console.log(`{\n${result}\n}`);
+  return true;
 };
 
 const firstRun = () => {

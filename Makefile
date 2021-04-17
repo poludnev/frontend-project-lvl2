@@ -20,3 +20,6 @@ publish:
 	npm publish
 
 .PHONY: test
+
+diff:
+	gendiff test/p1.json test/p2.json

@@ -3,7 +3,9 @@ import _ from 'lodash';
 import * as fs from 'fs';
 import * as path from 'path';
 
-const makeKeyStatusPairs = (key, data1 = {}, data2 = {}) => {
+const makeKeyStatusPairs = (key, data1, data2) => {
+  if (!key || !data1 || !data2) throw new Error('empty key or data');
+  if (Object.keys(data1).length < 1 || Object.keys(data2).length < 1) throw new Error('empty object');
   let status = 'equal';
 
   if (!data2[key]) {
@@ -16,19 +18,22 @@ const makeKeyStatusPairs = (key, data1 = {}, data2 = {}) => {
   return [key, status];
 };
 
+const parseFile = (file) => {
+  if (!file) throw new Error('empty file path');
+  const currentDirectoryPath = process.cwd();
+  const filePath = path.resolve(currentDirectoryPath, file);
+  const fileContent = fs.readFileSync(filePath, 'utf-8');
+  return JSON.parse(fileContent);
+};
+
 const render = (file1 = '', file2 = '') => {
   if (file1.length === 0 || file2.length === 0) return 'empty file path';
-  const currentDirectoryPath = process.cwd();
-  const filePath1 = path.resolve(currentDirectoryPath, file1);
-  const filePath2 = path.resolve(currentDirectoryPath, file2);
 
-  const file1Content = fs.readFileSync(filePath1, 'utf-8');
-  const file2Content = fs.readFileSync(filePath2, 'utf-8');
+  const parsedFile1 = parseFile(file1);
+  const parsedFile2 = parseFile(file2);
 
-  const parsedFile1 = JSON.parse(file1Content);
-  const parsedFile2 = JSON.parse(file2Content);
-  const file1Keys = Object.keys(JSON.parse(file1Content));
-  const file2Keys = Object.keys(JSON.parse(file2Content));
+  const file1Keys = Object.keys(parsedFile1);
+  const file2Keys = Object.keys(parsedFile2);
   const commonKeys = _.union(file1Keys, file2Keys).sort();
 
   const result = commonKeys
@@ -44,7 +49,7 @@ const render = (file1 = '', file2 = '') => {
   return true;
 };
 
-const firstRun = () => {
+const firstRun = (args = process.argv) => {
   program
     .description('Compares two configuration files and shows a difference.')
     .arguments('<filepath1>')
@@ -53,8 +58,8 @@ const firstRun = () => {
     .option('-V --version', 'output usage information')
     .option('-f --format [type]', 'output format')
     .action(render);
-  program.parse(process.argv);
+  program.parse(args);
 };
 
-export { render };
+export { render, makeKeyStatusPairs, parseFile };
 export default firstRun;

@@ -1,7 +1,6 @@
 import { program } from 'commander';
 import _ from 'lodash';
-import * as fs from 'fs';
-import * as path from 'path';
+import parseFile from './parse.js';
 
 const makeKeyStatusPairs = (key, data1, data2) => {
   if (!key || !data1 || !data2) throw new Error('empty key or data');
@@ -17,14 +16,6 @@ const makeKeyStatusPairs = (key, data1, data2) => {
     status = 'changed';
   }
   return [key, status];
-};
-
-const parseFile = (file) => {
-  if (!file) throw new Error('empty file path');
-  const currentDirectoryPath = process.cwd();
-  const filePath = path.resolve(currentDirectoryPath, file);
-  const fileContent = fs.readFileSync(filePath, 'utf-8');
-  return JSON.parse(fileContent);
 };
 
 const render = (file1 = '', file2 = '') => {
@@ -63,4 +54,4 @@ export default () => {
   program.parse(process.argv);
 };
 
-export { render, makeKeyStatusPairs, parseFile };
+export { render, makeKeyStatusPairs };

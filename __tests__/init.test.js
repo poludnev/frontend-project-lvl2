@@ -1,13 +1,6 @@
-// import { fileURLToPath } from 'url';
-// import { dirname } from 'path';
-// import init from '../src/init.js';
-import { expect } from '@jest/globals';
+import { expect, jest } from '@jest/globals';
 import { render, makeKeyStatusPairs, parseFile } from '../src/init.js';
 import jsonFilesContent from '../__fixtures__/jsonFilesContent.js';
-// import sum from '../sum.js';
-
-// const __filename = fileURLToPath(import.meta.url);
-// const __dirname = dirname(__filename);
 
 const wrongFile = 'wrongfilename';
 const file1 = '__fixtures__/p1.json';
@@ -33,5 +26,8 @@ test('makeKeyStatusPairs', () => {
 });
 
 test('render', () => {
-  expect(render()).toBe('empty file path');
+  expect(() => render()).toThrow('empty file path');
+  console.log = jest.fn();
+  expect(render(file1, file2)).toBe(true);
+  expect(console.log).toHaveBeenCalledWith(jsonFilesContent.compareResult);
 });

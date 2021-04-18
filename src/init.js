@@ -5,7 +5,8 @@ import * as path from 'path';
 
 const makeKeyStatusPairs = (key, data1, data2) => {
   if (!key || !data1 || !data2) throw new Error('empty key or data');
-  if (Object.keys(data1).length < 1 || Object.keys(data2).length < 1) throw new Error('empty object');
+  if (Object.keys(data1).length < 1) throw new Error('empty object');
+  if (Object.keys(data2).length < 1) throw new Error('empty object');
   let status = 'equal';
 
   if (!data2[key]) {
@@ -27,7 +28,8 @@ const parseFile = (file) => {
 };
 
 const render = (file1 = '', file2 = '') => {
-  if (file1.length === 0 || file2.length === 0) return 'empty file path';
+  if (file1.length === 0) throw new Error('empty file path');
+  if (file2.length === 0) throw new Error('empty file path');
 
   const parsedFile1 = parseFile(file1);
   const parsedFile2 = parseFile(file2);
@@ -49,7 +51,7 @@ const render = (file1 = '', file2 = '') => {
   return true;
 };
 
-const firstRun = (args = process.argv) => {
+export default () => {
   program
     .description('Compares two configuration files and shows a difference.')
     .arguments('<filepath1>')
@@ -58,8 +60,7 @@ const firstRun = (args = process.argv) => {
     .option('-V --version', 'output usage information')
     .option('-f --format [type]', 'output format')
     .action(render);
-  program.parse(args);
+  program.parse(process.argv);
 };
 
 export { render, makeKeyStatusPairs, parseFile };
-export default firstRun;

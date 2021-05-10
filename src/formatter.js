@@ -30,25 +30,25 @@ const makeString = (key, value, depth = 1) => {
 
 const stylish = (diff, depth = 1, filler = '  ') => {
   const result = diff.map(({ key, status, value, previousValue, children }) => {
-    if (status === statusTypes.added) {
-      return `${filler.repeat(depth)}+ ${makeString(key, value, depth)}`;
+    switch (status) {
+      case statusTypes.added:
+        return `${filler.repeat(depth)}+ ${makeString(key, value, depth)}`;
+      case statusTypes.removed:
+        return `${filler.repeat(depth)}- ${makeString(key, value, depth)}`;
+      case statusTypes.updated:
+        const removed = `${filler.repeat(depth)}- ${makeString(key, previousValue, depth)}`;
+        const added = `${filler.repeat(depth)}+ ${makeString(key, value, depth)}`;
+        return `${removed}\n${added}`;
+      case statusTypes.equal:
+        if (children) {
+          return `${filler.repeat(depth)}  ${key}: ${stylish(children, depth + 2)}`;
+        }
+        return `${filler.repeat(depth)}  ${makeString(key, value, depth)}`;
+      default:
+        return `${key}, ${status}`;
     }
-    if (status === statusTypes.removed) {
-      return `${filler.repeat(depth)}- ${makeString(key, value, depth)}`;
-    }
-    if (status === statusTypes.updated) {
-      const removed = `${filler.repeat(depth)}- ${makeString(key, previousValue, depth)}`;
-      const added = `${filler.repeat(depth)}+ ${makeString(key, value, depth)}`;
-      return `${removed}\n${added}`;
-    }
-    if (status === statusTypes.equal) {
-      if (children) {
-        return `${filler.repeat(depth)}  ${key}: ${stylish(children, depth + 2)}`;
-      }
-      return `${filler.repeat(depth)}  ${makeString(key, value, depth)}`;
-    }
-    return `${key}, ${status}`;
   });
+
   return `{\n${result.join('\n')}\n${filler.repeat(depth - 1)}}`;
 };
 

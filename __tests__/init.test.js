@@ -3,9 +3,9 @@ import * as fs from 'fs';
 import { fileURLToPath } from 'url';
 
 import {
-  beforeAll, expect, jest, test,
+  beforeAll, expect, test,
 } from '@jest/globals';
-import init from '..';
+// import init from '..';
 import parse from '../src/parse.js';
 import comparingResults from '../__fixtures__/comparingResults.js';
 import formatter from '../src/formatter';
@@ -61,10 +61,4 @@ test('formatter plain', () => {
 
 test('formatter json', () => {
   expect(formatter.json(jsonFilesDiff)).toEqual(comparingResults.json);
-});
-
-test('init', () => {
-  console.log = jest.fn();
-  init(['/usr/local/bin/node', '/usr/local/bin/gendiff', jsonFilePath1, jsonFilePath2]);
-  expect(console.log).toHaveBeenCalledWith(comparingResults.stylish);
 });

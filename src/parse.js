@@ -13,9 +13,7 @@ export default (file) => {
     case '.json':
       return JSON.parse(fileContent);
     case '.yaml':
-      const parseResult = yaml.load(fileContent);
-      if (parseResult === null) throw new Error('Empty YAML file');
-      return parseResult;
+      return yaml.load(fileContent);
     default:
       throw new Error('Unsupported file extansion');
   }

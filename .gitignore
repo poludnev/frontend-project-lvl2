@@ -1,13 +1,7 @@
 /node_modules/
 
-bin
-
 *.DS_Store
 
 /test
 
 coverage/
-
-jsonToYaml.js
-
-test1.js

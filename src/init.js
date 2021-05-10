@@ -1,6 +1,4 @@
 import { program } from 'commander';
-import _ from 'lodash';
-// import parseFile from './parse.js';
 import formatter from './formatter.js';
 import diff from './diff.js';
 

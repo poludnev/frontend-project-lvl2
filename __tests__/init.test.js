@@ -2,7 +2,9 @@ import path from 'path';
 import * as fs from 'fs';
 import { fileURLToPath } from 'url';
 
-import { beforeAll, expect, jest, test } from '@jest/globals';
+import {
+  beforeAll, expect, jest, test,
+} from '@jest/globals';
 import init from '..';
 import parse from '../src/parse.js';
 import comparingResults from '../__fixtures__/comparingResults.js';
@@ -19,7 +21,6 @@ let jsonFilePath2;
 let yamlFilePath1;
 let yamlFilePath2;
 let emptyJSONFile;
-let emptyYamlFile;
 let parsedConfig1;
 let parsedConfig2;
 let jsonFilesDiff;
@@ -31,7 +32,6 @@ beforeAll(() => {
   yamlFilePath1 = getFixturePath('config1.yaml');
   yamlFilePath2 = getFixturePath('config2.yaml');
   emptyJSONFile = getFixturePath('emptyConfig.json');
-  emptyYamlFile = getFixturePath('emptyConfig.yaml');
   parsedConfig1 = JSON.parse(fs.readFileSync(jsonFilePath1, 'utf-8'));
   parsedConfig2 = JSON.parse(fs.readFileSync(jsonFilePath2, 'utf-8'));
   jsonFilesDiff = diff(jsonFilePath1, jsonFilePath2);
@@ -41,7 +41,6 @@ beforeAll(() => {
 test('parse test', () => {
   expect(() => parse()).toThrow();
   expect(() => parse('')).toThrow('Can not read the file extention');
-  expect(() => parse(emptyYamlFile)).toThrow('Empty YAML file');
   expect(() => parse(emptyJSONFile)).toThrow('Unexpected end of JSON input');
   expect(() => parse(getFixturePath('config1.txt'))).toThrow('Unsupported file extansion');
   expect(parse(jsonFilePath1)).toEqual(parsedConfig1);
@@ -65,7 +64,6 @@ test('formatter json', () => {
 });
 
 test('init', () => {
-  console.log('init1 paths', jsonFilePath1, jsonFilePath2);
   console.log = jest.fn();
   init(['/usr/local/bin/node', '/usr/local/bin/gendiff', jsonFilePath1, jsonFilePath2]);
   expect(console.log).toHaveBeenCalledWith(comparingResults.stylish);

@@ -1,4 +1,5 @@
 import statusTypes from './status.js';
+
 const makeStringFromObject = (obj, depth = 1, filler = '  ') => {
   const entries = Object.entries(obj);
   const result = entries.map(([key, value]) => {
@@ -29,16 +30,18 @@ const makeString = (key, value, depth = 1) => {
 };
 
 const stylish = (diff, depth = 1, filler = '  ') => {
-  const result = diff.map(({ key, status, value, previousValue, children }) => {
+  const result = diff.map(({
+    key, status, value, previousValue, children,
+  }) => {
     switch (status) {
       case statusTypes.added:
         return `${filler.repeat(depth)}+ ${makeString(key, value, depth)}`;
       case statusTypes.removed:
         return `${filler.repeat(depth)}- ${makeString(key, value, depth)}`;
       case statusTypes.updated:
-        const removed = `${filler.repeat(depth)}- ${makeString(key, previousValue, depth)}`;
-        const added = `${filler.repeat(depth)}+ ${makeString(key, value, depth)}`;
-        return `${removed}\n${added}`;
+        return `${filler.repeat(depth)}- ${makeString(key, previousValue, depth)}\n${filler.repeat(
+          depth,
+        )}+ ${makeString(key, value, depth)}`;
       case statusTypes.equal:
         if (children) {
           return `${filler.repeat(depth)}  ${key}: ${stylish(children, depth + 2)}`;
@@ -54,28 +57,26 @@ const stylish = (diff, depth = 1, filler = '  ') => {
 
 const plain = (diff, parentKey = '') => {
   const result = diff
-    .filter(({ status, children }) => {
-      return status !== statusTypes.equal || children;
-    })
-    .map(({ key, status, value, previousValue, children }) => {
+    .filter(({ status, children }) => status !== statusTypes.equal || children)
+    .map(({
+      key, status, value, previousValue, children,
+    }) => {
       if (status === statusTypes.removed) {
-        return `Property \'${parentKey}${key}\' was ${status}`;
+        return `Property '${parentKey}${key}' was ${status}`;
       }
       if (status === statusTypes.updated) {
-        return `Property \'${parentKey}${key}\' was ${status}. From ${convert(
-          previousValue
+        return `Property '${parentKey}${key}' was ${status}. From ${convert(
+          previousValue,
         )} to ${convert(value)}`;
       }
       if (status === statusTypes.equal) {
         return plain(children, `${parentKey}${key}.`);
       }
-      return `Property \'${parentKey}${key}\' was ${status} with value: ${convert(value)}`;
+      return `Property '${parentKey}${key}' was ${status} with value: ${convert(value)}`;
     });
   return result.join('\n');
 };
-const json = (diff) => {
-  return JSON.stringify(diff, null, 2);
-};
+const json = (diff) => JSON.stringify(diff, null, 2);
 
 export default {
   stylish,

@@ -58,7 +58,6 @@ test('formatter stylish', () => {
 test('formatter plain', () => {
   expect(formatter.plain(jsonFilesDiff)).toEqual(comparingResults.plain);
 });
-
 test('formatter json', () => {
   expect(formatter.json(jsonFilesDiff)).toEqual(comparingResults.json);
 });

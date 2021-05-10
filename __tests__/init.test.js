@@ -1,50 +1,121 @@
-import { expect, jest, test } from '@jest/globals';
-import { render, makeKeyStatusPairs } from '../src/init.js';
-import parseFile, { parseJSON, parseYaml } from '../src/parse.js';
-import jsonFilesContent from '../__fixtures__/jsonFilesContent.js';
+import path from 'path';
+import { fileURLToPath } from 'url';
 
-const wrongFile = 'wrongfilename';
-const file1 = '__fixtures__/p1.json';
-const file2 = '__fixtures__/p2.json';
-const yamlFile1 = '__fixtures__/p1.yml';
-const emptyFile = '__fixtures__/emptyFile.json';
-const emptyYamlFile = '__fixtures__/emptyFile.yml';
+import { beforeAll, expect, jest, test } from '@jest/globals';
+// import { render } from '..';
+import init from '..';
+// import parse, { parseJSON, parseYaml } from '../src/parse.js';
+import parse from '../src/parse.js';
+import comparingResults from '../__fixtures__/comparingResults.js';
+// import parsedConfigFilesContent from '../__fixtures__/parsedConfigFilesContent.js';
+// import diff from '../src/diff.js';
+import formatter from '../src/formatter';
+// import plain from '../src/plain.js';
+// import json from '../src/json.js';
+// import convertDiff from '../src/converDiff.js';
+import objDiff from '../src/objectDiff.js';
+// import { exec } from 'child_process';
+// import { compareArrays } from '../src/utils.js';
+// import formate from '../src/plain.js';
 
-test('parseJSON', () => {
-  expect(() => parseJSON()).toThrow('empty file path');
-  expect(() => parseJSON(wrongFile)).toThrow('ENOENT');
-  expect(() => parseJSON(emptyFile)).toThrow('Unexpected end of JSON input');
-  expect(parseJSON(file1)).toMatchObject(jsonFilesContent.file1Content);
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+// console.log(__dirname);
+// console.log(import.meta.url);
+
+const getFixturePath = (filename) => path.join(__dirname, '..', '__fixtures__', filename);
+
+let jsonFile1;
+let jsonFile2;
+let yamlFile1;
+let yamlFile2;
+let emptyJSONFile;
+let emptyYamlFile;
+let file1;
+let file2;
+
+beforeAll(() => {
+  jsonFile1 = getFixturePath('config1.json');
+  jsonFile2 = getFixturePath('config2.json');
+  yamlFile1 = getFixturePath('config1.yaml');
+  yamlFile2 = getFixturePath('config2.yaml');
+  emptyJSONFile = getFixturePath('emptyConfig.json');
+  emptyYamlFile = getFixturePath('emptyConfig.yaml');
+  file1 = parse(getFixturePath('flatConfig1.json'));
+  file2 = parse(getFixturePath('flatConfig2.json'));
 });
 
-test('yaml parser', () => {
-  expect(() => parseYaml()).toThrow('empty file path');
-  expect(() => parseYaml(wrongFile)).toThrow('ENOENT');
-  expect(() => parseYaml(emptyYamlFile)).toThrow('Empty file');
-  expect(parseYaml(yamlFile1)).toMatchObject(jsonFilesContent.file1Content);
+test('parse test', () => {
+  expect(() => parse()).toThrow();
+  expect(() => parse('')).toThrow('Can not read the file extention');
+  expect(() => parse(emptyYamlFile)).toThrow('Empty file');
+  expect(parse(getFixturePath('config1.txt'))).toBe(false);
+  expect(parse(getFixturePath('flatConfig1.json'))).toEqual({
+    setting1: 'Value 1',
+    setting2: 200,
+    setting3: true,
+    setting6: { doge: { wow: '' }, key: 'value' },
+    stettings10: [true, false],
+    stettings7: [],
+    stettings8: [true, false],
+    stettings9: [true, false],
+  });
+  expect(parse(getFixturePath('config1.yaml'))).toEqual({
+    common: {
+      setting1: 'Value 1',
+      setting2: 200,
+      setting3: true,
+      setting6: { doge: { wow: '' }, key: 'value' },
+    },
+    group1: { baz: 'bas', foo: 'bar', nest: { key: 'value' } },
+    group2: { abc: 12345, deep: { id: 45 } },
+  });
 });
 
-test('parse', () => {
-  expect(() => parseFile()).toThrow();
-  expect(() => parseFile('somestr')).toThrow('Can not read the file extention');
-  expect(parseFile(file1)).toMatchObject(jsonFilesContent.file1Content);
-  expect(parseFile(yamlFile1)).toMatchObject(jsonFilesContent.file1Content);
+test('obj diff test', () => {
+  expect(objDiff(file1, file2)).toEqual(comparingResults.result5);
+  expect(objDiff(parse(jsonFile1), parse(jsonFile2))).toEqual(comparingResults.result4);
+  expect(objDiff(parse(yamlFile1), parse(yamlFile2))).toEqual(comparingResults.result4);
 });
 
-const data1 = parseJSON(file1);
-const data2 = parseJSON(file2);
-const keys = Object.keys(data1).sort();
+// test('compareAttays tests', () => {
+//   expect(() => compareArrays('text', true)).toThrow();
+//   expect(compareArrays([], [])).toBe(true);
+//   expect(compareArrays([1, 2], [2, 1])).toBe(false);
+//   expect(compareArrays([1, 2, 3], [1, 2, 3])).toBe(true);
+//   expect(compareArrays([1, 2, 3], [1, 2])).toBe(false);
+// });
 
-test('makeKeyStatusPairs', () => {
-  expect(makeKeyStatusPairs(keys[0], data1, data2)).toEqual(['follow', 'deleted']);
-  expect(makeKeyStatusPairs(keys[1], data1, data2)).toEqual(['host', 'equal']);
-  expect(() => makeKeyStatusPairs()).toThrow('empty key or data');
-  expect(() => makeKeyStatusPairs(keys[0], {}, {})).toThrow('empty object');
+test('formatter stylish', () => {
+  expect(formatter.stylish(objDiff(parse(jsonFile1), parse(jsonFile2)))).toEqual(
+    comparingResults.result1
+  );
+});
+test('formatter plain', () => {
+  expect(formatter.plain(objDiff(parse(jsonFile1), parse(jsonFile2)))).toEqual(
+    comparingResults.result3
+  );
 });
 
-test('render', () => {
-  expect(() => render()).toThrow('empty file path');
+test('formatter json', () => {
+  expect(formatter.json(objDiff(file1, file2))).toEqual(comparingResults.result6);
+});
+
+// test('render', () => {
+//   // expect(() => render()).toThrow('empty file path');
+//   console.log = jest.fn();
+//   expect(render(jsonFile1, jsonFile2)).toBe(true);
+//   expect(console.log).toHaveBeenCalledWith(comparingResults.result1);
+// });
+
+test('init', () => {
   console.log = jest.fn();
-  expect(render(file1, file2)).toBe(true);
-  expect(console.log).toHaveBeenCalledWith(jsonFilesContent.compareResult);
+  init([
+    '/usr/local/bin/node',
+    '/usr/local/bin/gendiff',
+    '__fixtures__/config1.json',
+    '__fixtures__/config2.json',
+  ]);
+
+  expect(console.log).toHaveBeenCalledWith(comparingResults.result1);
 });

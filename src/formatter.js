@@ -28,31 +28,6 @@ const makeString = (key, value, depth = 1) => {
   return `${key}: ${value}`;
 };
 
-// const formatter1 = (diff, depth = 1, filler = '  ') => {
-//   const result = diff.map(([status, key, value]) => {
-//     if (status === 'added') {
-//       return `${filler.repeat(depth)}+ ${makeString(key, value, depth)}`;
-//     }
-//     if (status === 'equal') {
-//       return `${filler.repeat(depth)}  ${makeString(key, value, depth)}`;
-//     }
-//     if (status === 'removed') {
-//       return `${filler.repeat(depth)}- ${makeString(key, value, depth)}`;
-//     }
-//     if (status === 'updated') {
-//       const removed = `${filler.repeat(depth)}- ${makeString(key, value[0], depth)}`;
-//       const added = `${filler.repeat(depth)}+ ${makeString(key, value[1], depth)}`;
-//       return `${removed}\n${added}`;
-//     }
-//     if (status === 'nested') {
-//       return `${filler.repeat(depth)}  ${key}: ${formatter1(value, depth + 2)}`;
-//     }
-//     throw new Error('unknown status');
-//   });
-
-//   return `{\n${result.join('\n')}\n${filler.repeat(depth - 1)}}`;
-// };
-
 const stylish = (diff, depth = 1, filler = '  ') => {
   const result = diff.map(({ key, status, value, previousValue, children }) => {
     if (status === statusTypes.added) {
@@ -98,11 +73,11 @@ const plain = (diff, parentKey = '') => {
     });
   return result.join('\n');
 };
-
-const json = (diff) => JSON.stringify(diff);
+const json = (diff) => {
+  return JSON.stringify(diff, null, 2);
+};
 
 export default {
-  // nested: formatter1,
   stylish,
   plain,
   json,

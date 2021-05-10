@@ -1,13 +1,6 @@
 import _ from 'lodash';
 import statusTypes from './status.js';
-// import { compareArrays as isArraysEqual } from './utils.js';
-
-// const status = {
-//   equal: 'equal',
-//   updated: 'updated',
-//   removed: 'removed',
-//   added: 'added',
-// };
+import parseConfigFile from './parse.js';
 
 const makeNode = (key, status, value, previousValue = undefined, children = undefined) =>
   _.pickBy(
@@ -20,7 +13,8 @@ const makeNode = (key, status, value, previousValue = undefined, children = unde
     },
     (e) => e !== undefined
   );
-const objDiff = (parsedFile1, parsedFile2) => {
+
+const getConfigFilesDifference = (parsedFile1, parsedFile2) => {
   const fileKeys1 = Object.keys(parsedFile1);
   const fileKeys2 = Object.keys(parsedFile2);
   const commonKeys = _.union(fileKeys1, fileKeys2).sort();
@@ -35,7 +29,6 @@ const objDiff = (parsedFile1, parsedFile2) => {
       case parsedFile1[key] instanceof Array &&
         parsedFile2[key] instanceof Array &&
         _.isEqual(parsedFile1[key], parsedFile2[key]):
-        // isArraysEqual(parsedFile1[key], parsedFile2[key]):
         return makeNode(key, statusTypes.equal, parsedFile1[key]);
       case parsedFile1[key] instanceof Array || parsedFile2[key] instanceof Array:
         return makeNode(key, statusTypes.updated, parsedFile2[key], parsedFile1[key]);
@@ -45,7 +38,7 @@ const objDiff = (parsedFile1, parsedFile2) => {
           statusTypes.equal,
           null,
           undefined,
-          objDiff(parsedFile1[key], parsedFile2[key])
+          getConfigFilesDifference(parsedFile1[key], parsedFile2[key])
         );
       default:
         return makeNode(key, statusTypes.updated, parsedFile2[key], parsedFile1[key]);
@@ -55,4 +48,9 @@ const objDiff = (parsedFile1, parsedFile2) => {
   return difference;
 };
 
-export default objDiff;
+export default (configFilePath1, configFilePath2) => {
+  const parsedConfig1 = parseConfigFile(configFilePath1);
+  const parsedConfig2 = parseConfigFile(configFilePath2);
+
+  return getConfigFilesDifference(parsedConfig1, parsedConfig2);
+};

@@ -8,11 +8,15 @@ export default (file) => {
   const currentDirectoryPath = process.cwd();
   const filePath = path.resolve(currentDirectoryPath, file);
   const fileContent = fs.readFileSync(filePath, 'utf-8');
-  if (fileExtName === '.json') return JSON.parse(fileContent);
-  if (fileExtName === '.yaml') {
-    const parseResult = yaml.load(fileContent);
-    if (parseResult === null) throw new Error('Empty file');
-    return parseResult;
+
+  switch (fileExtName) {
+    case '.json':
+      return JSON.parse(fileContent);
+    case '.yaml':
+      const parseResult = yaml.load(fileContent);
+      if (parseResult === null) throw new Error('Empty YAML file');
+      return parseResult;
+    default:
+      throw new Error('Unsupported file extansion');
   }
-  return false;
 };

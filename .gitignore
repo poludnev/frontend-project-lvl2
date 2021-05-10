@@ -7,3 +7,7 @@ bin
 /test
 
 coverage/
+
+jsonToYaml.js
+
+test1.js

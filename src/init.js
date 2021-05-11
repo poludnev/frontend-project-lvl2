@@ -21,6 +21,6 @@ export default (arg = process.argv) => {
       const result = formatter[options.format](diff(filepath1, filepath2));
       console.log(result);
     });
-  program.parse(arg);
+  program.parse(process.argv);
   // console.log('test run2', process.argv);
 };

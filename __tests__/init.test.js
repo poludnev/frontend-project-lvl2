@@ -2,14 +2,13 @@ import path from 'path';
 import * as fs from 'fs';
 import { fileURLToPath } from 'url';
 
-import {
-  beforeAll, expect, test,
-} from '@jest/globals';
-// import init from '..';
+import { beforeAll, expect, jest, test } from '@jest/globals';
+import init from '..';
 import parse from '../src/parse.js';
 import comparingResults from '../__fixtures__/comparingResults.js';
 import formatter from '../src/formatter';
 import diff from '../src/diff.js';
+import cons from '../src/cons.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -58,6 +57,51 @@ test('formatter stylish', () => {
 test('formatter plain', () => {
   expect(formatter.plain(jsonFilesDiff)).toEqual(comparingResults.plain);
 });
+
 test('formatter json', () => {
   expect(formatter.json(jsonFilesDiff)).toEqual(comparingResults.json);
 });
+
+// test('console.log test', () => {
+//   // console.log = jest.fn();
+//   expect(cons()).toBe(true);
+//   expect(cons('test')).toBe(true);
+//   expect(console.log).toHaveBeenCalledWith('cons run', undefined);
+//   expect(console.log).toHaveBeenCalledWith('cons run', 'test');
+// });
+
+// test('init', () => {
+//   // console.log = jest.fn();
+//   console.log(process.argv);
+
+//   init([
+//     '/usr/local/bin/node',
+//     '/usr/local/bin/gendiff',
+//     '--format',
+//     'plain',
+//     jsonFilePath1,
+//     jsonFilePath2,
+//   ]);
+//   init([
+//     '1',
+//     '2',
+//     '3',
+//     'plain',
+//     jsonFilePath1,
+//     jsonFilePath2,
+//     { format: 'plain' },
+//     '2',
+//     // '/usr/local/bin/gendiff',
+//   ]);
+//   console.log(process.argv);
+//   // init([
+//   //   '/usr/local/bin/node',
+//   //   '/usr/local/bin/gendiff',
+//   //   { format: 'plain' },
+//   //   'plain',
+//   //   jsonFilePath1,
+//   //   jsonFilePath2,
+//   // ]);
+//   // init(['/usr/local/bin/node', '/usr/local/bin/gendiff', yamlFilePath1, yamlFilePath2]);
+//   // expect(console.log).toHaveBeenCalledWith(comparingResults.plain);
+// });

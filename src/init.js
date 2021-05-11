@@ -15,12 +15,12 @@ export default () => {
     .option('-V --version', 'output usage information')
     .option('-f --format [type]', 'output format', 'stylish')
     .action((filepath1, filepath2, options) => {
-      console.log('options', options);
+      // console.log('options', options);
       if (filepath1.length === 0) throw new Error('empty file path');
       if (filepath2.length === 0) throw new Error('empty file path');
-      const result = formatter[options.format](diff(filepath1, filepath2));
+      const result = formatter.stylish(diff(filepath1, filepath2));
       console.log(result);
-    })
-    .parse(process.argv);
+    });
+  program.parse(process.argv);
   // console.log('test run2', process.argv);
 };

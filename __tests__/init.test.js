@@ -62,46 +62,10 @@ test('formatter json', () => {
   expect(formatter.json(jsonFilesDiff)).toEqual(comparingResults.json);
 });
 
-// test('console.log test', () => {
-//   // console.log = jest.fn();
-//   expect(cons()).toBe(true);
-//   expect(cons('test')).toBe(true);
-//   expect(console.log).toHaveBeenCalledWith('cons run', undefined);
-//   expect(console.log).toHaveBeenCalledWith('cons run', 'test');
-// });
+test('init', () => {
+  console.log = jest.fn();
 
-// test('init', () => {
-//   // console.log = jest.fn();
-//   console.log(process.argv);
-
-//   init([
-//     '/usr/local/bin/node',
-//     '/usr/local/bin/gendiff',
-//     '--format',
-//     'plain',
-//     jsonFilePath1,
-//     jsonFilePath2,
-//   ]);
-//   init([
-//     '1',
-//     '2',
-//     '3',
-//     'plain',
-//     jsonFilePath1,
-//     jsonFilePath2,
-//     { format: 'plain' },
-//     '2',
-//     // '/usr/local/bin/gendiff',
-//   ]);
-//   console.log(process.argv);
-//   // init([
-//   //   '/usr/local/bin/node',
-//   //   '/usr/local/bin/gendiff',
-//   //   { format: 'plain' },
-//   //   'plain',
-//   //   jsonFilePath1,
-//   //   jsonFilePath2,
-//   // ]);
-//   // init(['/usr/local/bin/node', '/usr/local/bin/gendiff', yamlFilePath1, yamlFilePath2]);
-//   // expect(console.log).toHaveBeenCalledWith(comparingResults.plain);
-// });
+  // init(['/usr/local/bin/node', '/usr/local/bin/gendiff', yamlFilePath1, yamlFilePath2]);
+  init(['/usr/local/bin/node', '/usr/local/bin/gendiff', yamlFilePath1, yamlFilePath2]);
+  expect(console.log).toHaveBeenCalledWith(comparingResults.stylish);
+});

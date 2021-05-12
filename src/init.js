@@ -5,7 +5,7 @@ import diff from './diff.js';
 const program = new Command();
 
 export default () => {
-  console.log('test run0', argv.length);
+  // console.log('test run0', argv.length);
   // if (argv.length < 0)
   // console.log('test run1', process.argv);
   program

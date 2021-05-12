@@ -4,9 +4,9 @@ import diff from './diff.js';
 
 const program = new Command();
 
-export default () => {
+export default (argv) => {
   // console.log('test run0', argv);
-  console.log('test run1', process.argv);
+  // console.log('test run1', process.argv);
   program
     .description('Compares two configuration files and shows a difference.')
     .arguments('<filepath1> <filepath2>')
@@ -22,7 +22,7 @@ export default () => {
       const result = formatter[options.format](diff(filepath1, filepath2));
       console.log(result);
     });
-  program.parse(process.argv);
+  program.parse(argv);
 
   // console.log('test run2', process.argv);
 };

@@ -65,14 +65,15 @@ beforeAll(() => {
 test('init', () => {
   console.log = jest.fn();
 
-  init(['/usr/local/bin/node', '/usr/local/bin/gendiff', yamlFilePath1, yamlFilePath2]);
-  init([
-    '/usr/local/bin/node',
-    '/usr/local/bin/gendiff',
-    '--format',
-    'plain',
-    yamlFilePath1,
-    yamlFilePath2,
-  ]);
+  init(yamlFilePath1, yamlFilePath2);
+  // init([
+  //   '/usr/local/bin/node',
+  //   '/usr/local/bin/gendiff',
+  //   '--format',
+  //   'plain',
+  //   yamlFilePath1,
+  //   yamlFilePath2,
+  // ]);
   expect(console.log).toHaveBeenCalledWith(comparingResults.stylish);
+  // expect(console.log).toHaveBeenCalledWith(comparingResults.stylish);
 });

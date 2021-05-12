@@ -15,6 +15,8 @@ export default (file) => {
       return JSON.parse(fileContent);
     case '.yaml':
       return yaml.load(fileContent);
+    case '.yml':
+      return yaml.load(fileContent);
     default:
       throw new Error('Unsupported file extansion');
   }

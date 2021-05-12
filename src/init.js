@@ -9,7 +9,7 @@ export default (arg = process.argv) => {
   // console.log('test run1', process.argv);
   program
     .description('Compares two configuration files and shows a difference.')
-    .arguments('<filepath1>', '<filepath2>')
+    .arguments('<filepath1> <filepath2>')
     .allowUnknownOption()
     .helpOption('-h, --help', 'read more information')
     .option('-V --version', 'output usage information')

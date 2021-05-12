@@ -9,7 +9,7 @@ export default (arg = process.argv) => {
   // console.log('test run1', process.argv);
   program
     .description('Compares two configuration files and shows a difference.')
-    .arguments('<filepath1> <filepath2>')
+    .arguments('<filepath1 filepath2>')
     .helpOption('-h, --help', 'read more information')
     .option('-V --version', 'output usage information')
     .option('-f --format [type]', 'output format', 'stylish')
@@ -19,6 +19,6 @@ export default (arg = process.argv) => {
       const result = formatter[options.format](diff(filepath1, filepath2));
       console.log(result);
     });
-  program.parse(process.argv);
+  program.parse(arg);
   // console.log('test run2', process.argv);
 };

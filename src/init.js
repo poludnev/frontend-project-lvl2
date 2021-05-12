@@ -7,6 +7,8 @@ const program = new Command();
 export default (...args) => {
   console.log('test run0', args);
   console.log('test run0', args.splice(-2));
+  console.log('process', process.argv);
+  console.log('test run2', [, , ...args]);
   // if (argv.length < 0)
   // console.log('test run1', process.argv);
   program

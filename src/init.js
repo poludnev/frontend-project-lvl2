@@ -5,8 +5,8 @@ import diff from './diff.js';
 const program = new Command();
 
 export default (argv = process.argv) => {
-  // console.log('test run0', argv);
-  // console.log('test run1', process.argv);
+  console.log('test run0', argv);
+  console.log('test run1', process.argv);
   program
     .description('Compares two configuration files and shows a difference.')
     .arguments('<filepath1> <filepath2>')

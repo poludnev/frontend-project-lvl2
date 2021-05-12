@@ -8,7 +8,7 @@ export default (...args) => {
   console.log('test run0', args);
   // console.log('test run0', args.splice(-2));
   console.log('process', process.argv);
-  console.log('test run2', [process.argv[0], process.argv[1], args]);
+  console.log('test run2', [process.argv[0], process.argv[1], ...args]);
   // if (argv.length < 0)
   // console.log('test run1', process.argv);
   program

@@ -24,7 +24,7 @@ export default (...argv) => {
       console.log(result);
     });
   const args = argv.length <= 0 ? process.argv : argv;
-  // console.log(args);
+  console.log(args);
   program.parse(args);
 
   // console.log('test run2', process.argv);

@@ -4,7 +4,7 @@ import diff from './diff.js';
 
 const program = new Command();
 
-export default (...argv) => {
+export default () => {
   console.log('test run0', argv.length);
   // if (argv.length < 0)
   // console.log('test run1', process.argv);
@@ -23,9 +23,9 @@ export default (...argv) => {
       const result = formatter[options.format](diff(filepath1, filepath2));
       console.log(result);
     });
-  const args = argv.length <= 0 ? process.argv : argv;
-  console.log(args);
-  program.parse(args);
+  // const args = argv.length <= 0 ? process.argv : argv;
+  // console.log(args);
+  program.parse();
 
   // console.log('test run2', process.argv);
 };

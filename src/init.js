@@ -25,6 +25,7 @@ export default (...args) => {
       if (filepath2.length === 0) throw new Error('empty file path');
       const result = formatter[options.format](diff(filepath1, filepath2));
       console.log(result);
+      return result;
     });
   // const args = argv.length <= 0 ? process.argv : argv;
   // console.log(args);

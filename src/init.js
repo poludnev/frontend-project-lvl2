@@ -30,7 +30,7 @@ export default (...args) => {
   // const args = argv.length <= 0 ? process.argv : argv;
   // console.log(args);
   program.parse([process.argv[0], process.argv[1], ...args]);
-  return 'hui';
+  return program;
 
   // console.log('test run2', process.argv);
 };

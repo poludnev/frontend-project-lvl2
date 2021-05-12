@@ -4,7 +4,7 @@ import diff from './diff.js';
 
 const program = new Command();
 
-export default (argv) => {
+export default (...argv) => {
   // console.log('test run0', argv);
   // console.log('test run1', process.argv);
   program

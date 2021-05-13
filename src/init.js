@@ -1,4 +1,4 @@
-import { Command } from 'commander';
+import { Command, option } from 'commander';
 import formatter from './formatter.js';
 import diff from './diff.js';
 
@@ -21,8 +21,12 @@ export default (...args) => {
     .option('-f --format [type]', 'output format', 'stylish')
     .action((filepath1, filepath2, options) => {
       console.log('actoin', filepath1, filepath2, 'option', options, 'option end');
+      const format = { format: options.format };
       if (filepath1.length === 0) throw new Error('empty file path');
       if (filepath2.length === 0) throw new Error('empty file path');
+      if (!options.format) {
+        format.format = option;
+      }
       const result = formatter[options.format](diff(filepath1, filepath2));
       console.log(result);
       return result;

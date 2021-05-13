@@ -27,7 +27,7 @@ export default (...args) => {
       if (!options.format) {
         format.format = options;
       }
-      const result = formatter[options.format](diff(filepath1, filepath2));
+      const result = formatter[format.format](diff(filepath1, filepath2));
       console.log(result);
       return result;
     });

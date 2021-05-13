@@ -1,4 +1,5 @@
 import statusTypes from './status.js';
+import diff from './diff.js';
 
 const makeStringFromObject = (obj, depth = 1, filler = '  ') => {
   const entries = Object.entries(obj);
@@ -74,8 +75,8 @@ const plain = (diff, parentKey = '') => {
 };
 const json = (diff) => JSON.stringify(diff, null, 2);
 
-export default {
-  stylish,
-  plain,
-  json,
+const f = { plain, stylish, json };
+
+export default (file1, file2, option) => {
+  return f[option](diff(file1, file2));
 };

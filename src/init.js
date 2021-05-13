@@ -35,7 +35,7 @@ export default (...args) => {
   // console.log(args);
   // program.parse([process.argv[0], process.argv[1], ...args, process.argv[1]]);
 
-  program.parse([...args]);
+  program.parse('[...args]');
   return program._actionResults[0];
 
   // console.log('test run2', process.argv);

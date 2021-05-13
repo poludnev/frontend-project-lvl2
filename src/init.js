@@ -20,7 +20,7 @@ export default (...args) => {
     .option('-V --version', 'output usage information')
     .option('-f --format [type]', 'output format', 'stylish')
     .action((filepath1, filepath2, options) => {
-      console.log('actoin', filepath1, filepath2);
+      console.log('actoin', filepath1, filepath2, options);
       if (filepath1.length === 0) throw new Error('empty file path');
       if (filepath2.length === 0) throw new Error('empty file path');
       const result = formatter[options.format](diff(filepath1, filepath2));

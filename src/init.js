@@ -1,4 +1,4 @@
-import { Command, option } from 'commander';
+import { Command } from 'commander';
 import formatter from './formatter.js';
 import diff from './diff.js';
 

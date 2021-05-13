@@ -6,7 +6,7 @@ const makeStringFromObject = (obj, depth = 1, filler = '  ') => {
     if (value instanceof Object) {
       return `${filler.repeat(depth + 2)}${key}: ${makeStringFromObject(value, depth + 2)}`;
     }
-    if (`${value}`.length === 0) return `${filler.repeat(depth + 1)}${key}:`;
+    if (`${value}`.length === 0) return `${filler.repeat(depth + 1)}${key}: `;
     return `${filler.repeat(depth + 2)}${key}: ${value}`;
   });
   return `{\n${result.join('\n')}\n${filler.repeat(depth)}}`;
@@ -25,14 +25,12 @@ const makeString = (key, value, depth = 1) => {
   if (value instanceof Object) {
     return `${key}: ${makeStringFromObject(value, depth + 1)}`;
   }
-  if (`${value}`.length === 0) return `${key}:`;
+  if (`${value}`.length === 0) return `${key}: `;
   return `${key}: ${value}`;
 };
 
 const stylish = (diff, depth = 1, filler = '  ') => {
-  const result = diff.map(({
-    key, status, value, previousValue, children,
-  }) => {
+  const result = diff.map(({ key, status, value, previousValue, children }) => {
     switch (status) {
       case statusTypes.added:
         return `${filler.repeat(depth)}+ ${makeString(key, value, depth)}`;
@@ -40,7 +38,7 @@ const stylish = (diff, depth = 1, filler = '  ') => {
         return `${filler.repeat(depth)}- ${makeString(key, value, depth)}`;
       case statusTypes.updated:
         return `${filler.repeat(depth)}- ${makeString(key, previousValue, depth)}\n${filler.repeat(
-          depth,
+          depth
         )}+ ${makeString(key, value, depth)}`;
       case statusTypes.equal:
         if (children) {
@@ -58,15 +56,13 @@ const stylish = (diff, depth = 1, filler = '  ') => {
 const plain = (diff, parentKey = '') => {
   const result = diff
     .filter(({ status, children }) => status !== statusTypes.equal || children)
-    .map(({
-      key, status, value, previousValue, children,
-    }) => {
+    .map(({ key, status, value, previousValue, children }) => {
       if (status === statusTypes.removed) {
         return `Property '${parentKey}${key}' was ${status}`;
       }
       if (status === statusTypes.updated) {
         return `Property '${parentKey}${key}' was ${status}. From ${convert(
-          previousValue,
+          previousValue
         )} to ${convert(value)}`;
       }
       if (status === statusTypes.equal) {

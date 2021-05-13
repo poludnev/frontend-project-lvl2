@@ -14,6 +14,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const getFixturePath = (filename) => path.join(__dirname, '..', '__fixtures__', filename);
+const newStylishResult = fs.readFileSync(getFixturePath('stylish.txt'), 'utf-8');
 
 let jsonFilePath1;
 let jsonFilePath2;
@@ -51,9 +52,10 @@ beforeAll(() => {
 //   expect(yamlFilesDiff).toEqual(comparingResults.diff);
 // });
 
-// test('formatter stylish', () => {
-//   expect(formatter.stylish(jsonFilesDiff)).toEqual(comparingResults.stylish);
-// });
+test('formatter stylish', () => {
+  expect(formatter.stylish(jsonFilesDiff)).toEqual(comparingResults.stylish);
+  // expect(formatter.stylish(jsonFilesDiff)).toEqual(newStylishResult);
+});
 // test('formatter plain', () => {
 //   expect(formatter.plain(jsonFilesDiff)).toEqual(comparingResults.plain);
 // });
@@ -62,18 +64,18 @@ beforeAll(() => {
 //   expect(formatter.json(jsonFilesDiff)).toEqual(comparingResults.json);
 // });
 
-test('init', () => {
-  console.log = jest.fn();
+// test('init', () => {
+//   console.log = jest.fn();
 
-  init(yamlFilePath1, yamlFilePath2);
-  // init([
-  //   '/usr/local/bin/node',
-  //   '/usr/local/bin/gendiff',
-  //   '--format',
-  //   'plain',
-  //   yamlFilePath1,
-  //   yamlFilePath2,
-  // ]);
-  expect(console.log).toHaveBeenCalledWith(comparingResults.stylish);
-  // expect(console.log).toHaveBeenCalledWith(comparingResults.stylish);
-});
+//   init(yamlFilePath1, yamlFilePath2);
+//   // init([
+//   //   '/usr/local/bin/node',
+//   //   '/usr/local/bin/gendiff',
+//   //   '--format',
+//   //   'plain',
+//   //   yamlFilePath1,
+//   //   yamlFilePath2,
+//   // ]);
+//   expect(console.log).toHaveBeenCalledWith(comparingResults.stylish);
+//   // expect(console.log).toHaveBeenCalledWith(comparingResults.stylish);
+// });

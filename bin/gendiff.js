@@ -3,7 +3,8 @@
 
 // firstRun();
 
-import pkg from 'commander';
+import pkg, { combineFlagAndOptionalValue } from 'commander';
+import cons from '../src/cons.js';
 
 import formatter from '../src/formatter.js';
 // import diff from './diff.js';
@@ -12,6 +13,7 @@ const { Command } = pkg;
 const program = new Command();
 
 export default () => {
+  console.log('test start bin');
   // console.log('test run0', args);
   // console.log('test run0', args.splice(-2));
   // console.log('process', process.argv);
@@ -42,8 +44,9 @@ export default () => {
   // const args = argv.length <= 0 ? process.argv : argv;
   // console.log(args);
   // program.parse([process.argv[0], process.argv[1], ...args, process.argv[1]]);
-
+  console.log('test start2 bin');
   program.parse(process.argv);
+  console.log('test start3 bin');
   return program;
 
   // console.log('test run2', process.argv);

@@ -26,7 +26,7 @@ export default () => {
     .helpOption('-h, --help', 'read more information')
     .option('-V --version', 'output usage information')
     .option('-f --format [type]', 'output format', 'stylish')
-    .action(formatter);
+    .action((file1, file2, option) => formatter(file1, file2, option));
   // (filepath1, filepath2, options) => {
   // console.log('actoin', filepath1, filepath2, 'option', options, 'option end');
   // const format = { format: options.format };

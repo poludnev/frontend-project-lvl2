@@ -1,7 +1,9 @@
-import { Command } from 'commander';
+import pkg from 'commander';
+
 import formatter from './formatter.js';
 import diff from './diff.js';
 
+const { Command } = pkg;
 const program = new Command();
 
 export default (...args) => {

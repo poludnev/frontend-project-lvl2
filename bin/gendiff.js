@@ -3,7 +3,7 @@
 
 // firstRun();
 
-import pkg, { combineFlagAndOptionalValue } from 'commander';
+import pkg from 'commander';
 import cons from '../src/cons.js';
 
 import formatter from '../src/formatter.js';

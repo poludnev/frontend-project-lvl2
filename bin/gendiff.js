@@ -12,7 +12,7 @@ import formatter from '../src/formatter.js';
 const { Command } = pkg;
 const program = new Command();
 
-export default () => {
+export default (file1, file2, option) => {
   console.log('test start bin');
   // console.log('test run0', args);
   // console.log('test run0', args.splice(-2));
@@ -28,7 +28,10 @@ export default () => {
     .helpOption('-h, --help', 'read more information')
     .option('-V --version', 'output usage information')
     .option('-f --format [type]', 'output format', 'stylish')
-    .action((file1, file2, option) => formatter(file1, file2, option));
+    .action((file1, file2, option) => {
+      console.log('one another test');
+      return formatter(file1, file2, option);
+    });
   // (filepath1, filepath2, options) => {
   // console.log('actoin', filepath1, filepath2, 'option', options, 'option end');
   // const format = { format: options.format };
@@ -47,7 +50,7 @@ export default () => {
   console.log('test start2 bin');
   program.parse(process.argv);
   console.log('test start3 bin');
-  return program;
+  return formatter(file1, file2, option);
 
   // console.log('test run2', process.argv);
 };

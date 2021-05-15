@@ -79,5 +79,6 @@ const f = { plain, stylish, json };
 
 export default (file1, file2, option = 'stylish') => {
   console.log(option);
+  console.log()
   return f[option](diff(file1, file2));
 };

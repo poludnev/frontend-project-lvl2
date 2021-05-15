@@ -1,7 +1,10 @@
 #!/usr/bin/env node
 
-console.log('bin run check');
-
+const test = () => {
+  console.log('bin run check2');
+};
+console.log('bin run check1');
+test();
 
 // // import firstRun from '../src/init.js';
 

@@ -2,7 +2,13 @@ import _ from 'lodash';
 import statusTypes from './status.js';
 import parseConfigFile from './parse.js';
 
-const makeNode = (key, status, value, previousValue = undefined, children = undefined) => _.pickBy(
+export const makeNode = (
+  key,
+  status,
+  value,
+  previousValue = undefined,
+  children = undefined,
+) => _.pickBy(
   {
     key,
     status,

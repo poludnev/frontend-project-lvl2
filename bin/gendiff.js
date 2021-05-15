@@ -1,10 +1,10 @@
 #!/usr/bin/env node
 
 const test = () => {
-  console.log('bin run check2');
+  //   console.log('bin run check2');
 };
-console.log('bin run check1');
-test();
+// console.log('bin run check1');
+// test();
 
 // // import firstRun from '../src/init.js';
 
@@ -38,10 +38,10 @@ program
   .option('-V --version', 'output usage information')
   .option('-f --format [type]', 'output format', 'stylish')
   .action((file1, file2, option) => {
-    console.log('one another test');
-    console.log(file1, file2, option);
+    // console.log('one another test');
+    // console.log(file1, file2, option);
     console.log(formatter(file1, file2, option.format));
-        //   return formatter(file1, file2, option);
+    //   return formatter(file1, file2, option);
   });
 //   //   // (filepath1, filepath2, options) => {
 //   //   // console.log('actoin', filepath1, filepath2, 'option', options, 'option end');

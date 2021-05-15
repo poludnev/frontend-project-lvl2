@@ -3,7 +3,6 @@
 import commander from 'commander';
 import formatter from '../src/formatter.js';
 
-// const { Command } = pkg;
 const program = new commander.Command();
 
 program

@@ -11,7 +11,7 @@ import formatter from '../src/formatter.js';
 
 const { Command } = pkg;
 const program = new Command();
-
+console.log('gendiff 123123123');
 export default (file1, file2, option) => {
   console.log('test start bin');
   // console.log('test run0', args);

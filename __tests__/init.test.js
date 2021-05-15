@@ -2,9 +2,7 @@ import path from 'path';
 import * as fs from 'fs';
 import { fileURLToPath } from 'url';
 
-import {
-  beforeAll, expect, test,
-} from '@jest/globals';
+import { expect, test } from '@jest/globals';
 import parse from '../src/parse.js';
 import formatter from '../src/formatter';
 import diff from '../src/diff.js';

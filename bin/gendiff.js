@@ -14,7 +14,7 @@ import pkg from 'commander';
 // import cons from '../src/cons.js';
 // // import cons from '../src/cons.js';
 
-// import formatter from '../src/formatter.js';
+import formatter from '../src/formatter.js';
 // formatter(fil)
 // // // import diff from './diff.js';
 

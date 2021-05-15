@@ -5,4 +5,4 @@
 <br>
 <a href="https://codeclimate.com/github/poludnev/frontend-project-lvl2/test_coverage"><img src="https://api.codeclimate.com/v1/badges/7a7bba83400eeefab8c6/test_coverage" /></a>
 
- https://asciinema.org/a/ONpoH10eoHa7z9LGsqtsXb6F4
+[![asciicast](https://asciinema.org/a/ONpoH10eoHa7z9LGsqtsXb6F4.svg)](https://asciinema.org/a/ONpoH10eoHa7z9LGsqtsXb6F4)

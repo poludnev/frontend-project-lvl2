@@ -7,6 +7,7 @@ const { Command } = pkg;
 const program = new Command();
 
 export default () => {
+  console.log('test 123 123 123');
   // console.log('test run0', args);
   // console.log('test run0', args.splice(-2));
   // console.log('process', process.argv);

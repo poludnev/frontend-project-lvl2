@@ -22,7 +22,7 @@ export const makeNode = (
 const getConfigFilesDifference = (parsedFile1, parsedFile2) => {
   const fileKeys1 = Object.keys(parsedFile1);
   const fileKeys2 = Object.keys(parsedFile2);
-  const commonKeys = _.union(fileKeys1, fileKeys2).sort();
+  const commonKeys = _.sortBy(_.union(fileKeys1, fileKeys2));
   const difference = commonKeys.map((key) => {
     switch (true) {
       case !_.has(parsedFile2, key):

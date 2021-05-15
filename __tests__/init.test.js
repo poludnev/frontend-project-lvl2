@@ -18,29 +18,29 @@ const plainResult = fs.readFileSync(getFixturePath('results/plain.txt'), 'utf-8'
 const jsonResult = fs.readFileSync(getFixturePath('results/json.txt'), 'utf-8');
 const diffResult = JSON.parse(fs.readFileSync(getFixturePath('results/diffResult.txt'), 'utf-8'));
 
-let jsonFilePath1;
-let jsonFilePath2;
-let yamlFilePath1;
-let yamlFilePath2;
-let emptyJSONFile;
-let parsedConfig1;
-let parsedConfig2;
-let jsonFilesDiff;
-let yamlFilesDiff;
-let unsupportedConfig;
+// let jsonFilePath1;
+// let jsonFilePath2;
+// let yamlFilePath1;
+// let yamlFilePath2;
+// let emptyJSONFile;
+// let parsedConfig1;
+// let parsedConfig2;
+// let jsonFilesDiff;
+// let yamlFilesDiff;
+// let unsupportedConfig;
 
-beforeAll(() => {
-  jsonFilePath1 = getFixturePath('config1.json');
-  jsonFilePath2 = getFixturePath('config2.json');
-  yamlFilePath1 = getFixturePath('config1.yml');
-  yamlFilePath2 = getFixturePath('config2.yaml');
-  emptyJSONFile = getFixturePath('emptyConfig.json');
-  parsedConfig1 = JSON.parse(fs.readFileSync(jsonFilePath1, 'utf-8'));
-  parsedConfig2 = JSON.parse(fs.readFileSync(jsonFilePath2, 'utf-8'));
-  jsonFilesDiff = diff(jsonFilePath1, jsonFilePath2);
-  yamlFilesDiff = diff(yamlFilePath1, yamlFilePath2);
-  unsupportedConfig = getFixturePath('unsupportedConfig.txt');
-});
+// beforeAll(() => {
+const jsonFilePath2 = getFixturePath('config2.json');
+const jsonFilePath1 = getFixturePath('config1.json');
+const yamlFilePath1 = getFixturePath('config1.yml');
+const yamlFilePath2 = getFixturePath('config2.yaml');
+const emptyJSONFile = getFixturePath('emptyConfig.json');
+const parsedConfig1 = JSON.parse(fs.readFileSync(jsonFilePath1, 'utf-8'));
+const parsedConfig2 = JSON.parse(fs.readFileSync(jsonFilePath2, 'utf-8'));
+const jsonFilesDiff = diff(jsonFilePath1, jsonFilePath2);
+const yamlFilesDiff = diff(yamlFilePath1, yamlFilePath2);
+const unsupportedConfig = getFixturePath('unsupportedConfig.txt');
+// });
 
 test('parse test', () => {
   expect(() => parse()).toThrow();

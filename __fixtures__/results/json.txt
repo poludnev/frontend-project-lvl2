@@ -1,7 +1,7 @@
 [
   {
     "key": "common",
-    "status": "equal",
+    "status": "nested",
     "value": null,
     "children": [
       {
@@ -39,12 +39,12 @@
       },
       {
         "key": "setting6",
-        "status": "equal",
+        "status": "nested",
         "value": null,
         "children": [
           {
             "key": "doge",
-            "status": "equal",
+            "status": "nested",
             "value": null,
             "children": [
               {
@@ -71,7 +71,7 @@
   },
   {
     "key": "group1",
-    "status": "equal",
+    "status": "nested",
     "value": null,
     "children": [
       {

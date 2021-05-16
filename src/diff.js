@@ -1,6 +1,6 @@
 import _ from 'lodash';
-import statusTypes from './status.js';
-import parseConfigFile from './parse.js';
+import nodeTypes from './nodeTypes.js';
+import parseConfigFile from './parser.js';
 
 export const makeNode = (
   key,
@@ -26,27 +26,27 @@ const getConfigFilesDifference = (parsedFile1, parsedFile2) => {
   const difference = commonKeys.map((key) => {
     switch (true) {
       case !_.has(parsedFile2, key):
-        return makeNode(key, statusTypes.removed, parsedFile1[key]);
+        return makeNode(key, nodeTypes.removed, parsedFile1[key]);
       case !_.has(parsedFile1, key):
-        return makeNode(key, statusTypes.added, parsedFile2[key]);
+        return makeNode(key, nodeTypes.added, parsedFile2[key]);
       case parsedFile1[key] === parsedFile2[key]:
-        return makeNode(key, statusTypes.equal, parsedFile1[key]);
+        return makeNode(key, nodeTypes.equal, parsedFile1[key]);
       case parsedFile1[key] instanceof Array
         && parsedFile2[key] instanceof Array
         && _.isEqual(parsedFile1[key], parsedFile2[key]):
-        return makeNode(key, statusTypes.equal, parsedFile1[key]);
+        return makeNode(key, nodeTypes.equal, parsedFile1[key]);
       case parsedFile1[key] instanceof Array || parsedFile2[key] instanceof Array:
-        return makeNode(key, statusTypes.updated, parsedFile2[key], parsedFile1[key]);
+        return makeNode(key, nodeTypes.updated, parsedFile2[key], parsedFile1[key]);
       case parsedFile1[key] instanceof Object && parsedFile2[key] instanceof Object:
         return makeNode(
           key,
-          statusTypes.equal,
+          nodeTypes.nested,
           null,
           undefined,
           getConfigFilesDifference(parsedFile1[key], parsedFile2[key]),
         );
       default:
-        return makeNode(key, statusTypes.updated, parsedFile2[key], parsedFile1[key]);
+        return makeNode(key, nodeTypes.updated, parsedFile2[key], parsedFile1[key]);
     }
   });
 

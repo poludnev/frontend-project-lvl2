@@ -1,4 +1,4 @@
-import statusTypes from './status.js';
+import nodeTypes from './nodeTypes.js';
 import diff from './diff.js';
 
 const stringifyObject = (obj, depth = 1, filler = '  ') => {
@@ -23,66 +23,64 @@ const stringifyKeyValue = (key, value, depth = 1) => {
   return `${key}: ${value}`;
 };
 
-const stylish = (filesDifference, depth = 1, filler = '  ') => {
-  const result = filesDifference.map(({
-    key, status, value, previousValue, children,
-  }) => {
-    switch (status) {
-      case statusTypes.added:
-        return `${filler.repeat(depth)}+ ${stringifyKeyValue(key, value, depth)}`;
-      case statusTypes.removed:
-        return `${filler.repeat(depth)}- ${stringifyKeyValue(key, value, depth)}`;
-      case statusTypes.updated:
-        return `${filler.repeat(depth)}- ${stringifyKeyValue(key, previousValue, depth)}\n${filler.repeat(
-          depth,
-        )}+ ${stringifyKeyValue(key, value, depth)}`;
-      case statusTypes.equal:
-        if (children) {
-          return `${filler.repeat(depth)}  ${key}: ${stylish(children, depth + 2)}`;
-        }
-        return `${filler.repeat(depth)}  ${stringifyKeyValue(key, value, depth)}`;
-      default:
-        return `${key}, ${status}`;
-    }
-  });
-
-  return `{\n${result.join('\n')}\n${filler.repeat(depth - 1)}}`;
-};
-
 const convertValue = (value) => {
   if (typeof value === 'string') return `'${value}'`;
   if (typeof value === 'object' && value !== null) return '[complex value]';
   return value;
 };
 
+const stylish = (filesDifference, depth = 1, filler = '  ') => {
+  const result = filesDifference.map(({
+    key, status, value, previousValue, children,
+  }) => {
+    switch (status) {
+      case nodeTypes.added:
+        return `${filler.repeat(depth)}+ ${stringifyKeyValue(key, value, depth)}`;
+      case nodeTypes.removed:
+        return `${filler.repeat(depth)}- ${stringifyKeyValue(key, value, depth)}`;
+      case nodeTypes.updated:
+        return `${filler.repeat(depth)}- ${stringifyKeyValue(key, previousValue, depth)}\n${filler.repeat(
+          depth,
+        )}+ ${stringifyKeyValue(key, value, depth)}`;
+      case nodeTypes.nested:
+        return `${filler.repeat(depth)}  ${key}: ${stylish(children, depth + 2)}`;
+      case nodeTypes.equal:
+        return `${filler.repeat(depth)}  ${stringifyKeyValue(key, value, depth)}`;
+      default:
+        return `${key}, ${status}`;
+    }
+  });
+  return `{\n${result.join('\n')}\n${filler.repeat(depth - 1)}}`;
+};
+
 const plain = (filesDifference, parentKey = '') => {
   const result = filesDifference
-    .filter(({ status, children }) => status !== statusTypes.equal || children)
+    .filter(({ status, children }) => status !== nodeTypes.equal || children)
     .map(({
       key, status, value, previousValue, children,
     }) => {
-      if (status === statusTypes.removed) {
-        return `Property '${parentKey}${key}' was ${status}`;
+      switch (status) {
+        case nodeTypes.removed:
+          return `Property '${parentKey}${key}' was ${status}`;
+        case nodeTypes.updated:
+          return `Property '${parentKey}${key}' was ${status}. From ${convertValue(
+            previousValue,
+          )} to ${convertValue(value)}`;
+        case nodeTypes.nested:
+          return plain(children, `${parentKey}${key}.`);
+        case nodeTypes.added:
+          return `Property '${parentKey}${key}' was ${status} with value: ${convertValue(value)}`;
+        default:
+          throw new Error('unknown node type');
       }
-      if (status === statusTypes.updated) {
-        return `Property '${parentKey}${key}' was ${status}. From ${convertValue(
-          previousValue,
-        )} to ${convertValue(value)}`;
-      }
-      if (status === statusTypes.equal) {
-        return plain(children, `${parentKey}${key}.`);
-      }
-      return `Property '${parentKey}${key}' was ${status} with value: ${convertValue(value)}`;
     });
   return result.join('\n');
 };
 
 const json = (filesDifference) => JSON.stringify(filesDifference, null, 2);
 
-const getFormattedDifference = {
+export default (file1, file2, option = 'stylish') => ({
   stylish,
   plain,
   json,
-};
-
-export default (file1, file2, option = 'stylish') => getFormattedDifference[option](diff(file1, file2));
+})[option](diff(file1, file2));

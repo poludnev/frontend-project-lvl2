@@ -3,7 +3,7 @@ import * as fs from 'fs';
 import { fileURLToPath } from 'url';
 
 import { expect, test } from '@jest/globals';
-import parse from '../src/parse.js';
+import parse from '../src/parser.js';
 import formatter from '../src/formatter';
 import diff from '../src/diff.js';
 

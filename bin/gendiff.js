@@ -7,9 +7,10 @@ const program = new commander.Command();
 
 program
   .description('Compares two configuration files and shows a difference.')
+  .version('0.0.1', '-V, --version', 'output usage information')
   .arguments('<filepath1> <filepath2>')
-  .option('-V --version', 'output usage information')
-  .option('-f --format [type]', 'output format', 'stylish')
+  .helpOption('-h, --help', 'output usage information')
+  .option('-f, --format [type]', 'output format', 'stylish')
   .action((file1, file2, option) => {
     console.log(formatter(file1, file2, option.format));
   });

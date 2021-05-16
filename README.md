@@ -10,7 +10,9 @@
 <p>See the help. Run:</p>
 $ gendiff -h
 <br>
+<br>
 <a href="https://asciinema.org/a/ONpoH10eoHa7z9LGsqtsXb6F4" target="_blank"><img src="https://asciinema.org/a/ONpoH10eoHa7z9LGsqtsXb6F4.svg" width = "200" /></a>
+<br>
 <br>
 <p>Get 'stylish' formatted difference:</p>
 $ gendiff <filename1> <filname2>

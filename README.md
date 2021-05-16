@@ -33,5 +33,6 @@ $ gendiff -f plain <filename1> <filname2>
 <br>
 $ gendiff -f json <filename1> <filname2>
 <br>
+<br>
 <a href="https://asciinema.org/a/knieOah4NfzX9JwqltWPxn7IZ" target="_blank"><img src="https://asciinema.org/a/knieOah4NfzX9JwqltWPxn7IZ.svg" width = "200" /></a>
 

@@ -45,8 +45,10 @@ const getConfigFilesDifference = (parsedFile1, parsedFile2) => {
           undefined,
           getConfigFilesDifference(parsedFile1[key], parsedFile2[key]),
         );
-      default:
+      case parsedFile1[key] !== parsedFile2[key]:
         return makeNode(key, nodeTypes.updated, parsedFile2[key], parsedFile1[key]);
+      default:
+        throw new Error('Unable get difference');
     }
   });
 

@@ -47,7 +47,7 @@ const stylish = (filesDifference, depth = 1, filler = '  ') => {
       case nodeTypes.equal:
         return `${filler.repeat(depth)}  ${stringifyKeyValue(key, value, depth)}`;
       default:
-        return `${key}, ${status}`;
+        throw new Error('Unknown node type');
     }
   });
   return `{\n${result.join('\n')}\n${filler.repeat(depth - 1)}}`;
@@ -71,7 +71,7 @@ const plain = (filesDifference, parentKey = '') => {
         case nodeTypes.added:
           return `Property '${parentKey}${key}' was ${status} with value: ${convertValue(value)}`;
         default:
-          throw new Error('unknown node type');
+          throw new Error('Unknown node type');
       }
     });
   return result.join('\n');

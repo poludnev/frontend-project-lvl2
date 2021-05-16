@@ -22,6 +22,8 @@ $ gendiff -f plain <filename1> <filname2>
 <a href="https://asciinema.org/a/6YDHXl23prIGtuRNLOTdbwnl3" target="_blank"><img src="https://asciinema.org/a/6YDHXl23prIGtuRNLOTdbwnl3.svg" width = "200"/></a>
 <br>
 <p>Get json view difference:</p>
+<br>
 $ gendiff -f json <filename1> <filname2>
+<br>
 <a href="https://asciinema.org/a/knieOah4NfzX9JwqltWPxn7IZ" target="_blank"><img src="https://asciinema.org/a/knieOah4NfzX9JwqltWPxn7IZ.svg" width = "200" /></a>
 

@@ -29,8 +29,6 @@ $ gendiff -f plain <filename1> <filname2>
 <br>
 <br>
 <p>Get json view difference:</p>
-<br>
-<br>
 $ gendiff -f json <filename1> <filname2>
 <br>
 <br>

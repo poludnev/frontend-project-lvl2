@@ -1,4 +1,5 @@
-<h1> Hexlet tests and linter status </h1>
+<h1>GenDiff</h1>
+<h3>Compare your configs</h3>
 <a href="https://github.com/poludnev/frontend-project-lvl2/actions">
   <img src="https://github.com/poludnev/frontend-project-lvl2/workflows/hexlet-check/badge.svg" />
 </a>

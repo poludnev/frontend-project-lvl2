@@ -6,7 +6,7 @@ font-family: 'Roboto', sans-serif;
   }
   </style>
 
-<h1>GenDiff</h1>
+<h1 style="font-family: 'Roboto', sans-serif;">GenDiff</h1>
 <h2>Compare your configuration files</h2>
 <h3>
 <a href="https://github.com/poludnev/frontend-project-lvl2/actions">

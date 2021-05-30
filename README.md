@@ -1,3 +1,5 @@
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans&family=Roboto&display=swap" rel="stylesheet">
 
 
 <h1>GenDiff</h1>
@@ -17,37 +19,37 @@
 </a>
  </h3>
  
-<h3>Features:</h3>
+<h3>Features</h3>
 <oL>
   <li>Compare both JSON and YAML configs</li>
   <li>Easy to use</li>
   <li>Easy to maintain</li>
-  </ol>
+</ol>
 
 <h3>Usage</h3>
-<p>See the help. Run:<br>
-$ gendiff -h</p>
-<br>
-<a href="https://asciinema.org/a/ONpoH10eoHa7z9LGsqtsXb6F4" target="_blank"><img src="https://asciinema.org/a/ONpoH10eoHa7z9LGsqtsXb6F4.svg" width = "200" /></a>
-<br>
-<br>
-<p>Get 'stylish' formatted difference:</p>
-$ gendiff <filename1> <filname2>
-<br>
-<br>  
-<a href="https://asciinema.org/a/UIN83US9O6qtyWSqAR7dnyTlm" target="_blank"><img src="https://asciinema.org/a/UIN83US9O6qtyWSqAR7dnyTlm.svg" width = "200" /></a>
-<br>
-<br>
-<p>Get 'plain' formatted difference:</p>
-$ gendiff -f plain <filename1> <filname2>
-<br>
-<br>
-<a href="https://asciinema.org/a/6YDHXl23prIGtuRNLOTdbwnl3" target="_blank"><img src="https://asciinema.org/a/6YDHXl23prIGtuRNLOTdbwnl3.svg" width = "200"/></a>
-<br>
-<br>
-<p>Get json view difference:</p>
-$ gendiff -f json <filename1> <filname2>
-<br>
-<br>
-<a href="https://asciinema.org/a/knieOah4NfzX9JwqltWPxn7IZ" target="_blank"><img src="https://asciinema.org/a/knieOah4NfzX9JwqltWPxn7IZ.svg" width = "200" /></a>
-
+<ol>
+  <li>
+    <h4>See the help. Run:</h4>
+    <p>$ gendiff -h</p>
+    <a href="https://asciinema.org/a/ONpoH10eoHa7z9LGsqtsXb6F4" target="_blank"><img src="https://asciinema.org/a/ONpoH10eoHa7z9LGsqtsXb6F4.svg" width = "200" /></a>
+  </li>
+  <br>
+  <li>
+    <h4>Get 'stylish' formatted difference:</h4>
+    <p>$ gendiff &#60;filename1&#62; &#60;filename2&#62; <i>or</i> $ gendiff -f stylish &#60;filename1&#62; &#60;filename2&#62;</p>
+    <a href="https://asciinema.org/a/UIN83US9O6qtyWSqAR7dnyTlm" target="_blank"><img src="https://asciinema.org/a/UIN83US9O6qtyWSqAR7dnyTlm.svg" width = "200" /></a>
+  </li>
+  <br>
+  <li>
+    <h4>Get 'plain' formatted difference:</h4>
+    <p>$ gendiff -f plain &#60;filename1&#62; &#60;filname2&#62;</p>
+    <a href="https://asciinema.org/a/6YDHXl23prIGtuRNLOTdbwnl3" target="_blank"><img src="https://asciinema.org/a/6YDHXl23prIGtuRNLOTdbwnl3.svg" width = "200"/></a>
+  </li>
+  <br>
+  <li>
+    <h4>Get json view difference:</h4>
+    <p>$ gendiff -f json &#60;filename1&#62; &#60;filname2&#62;</p>
+    <a href="https://asciinema.org/a/knieOah4NfzX9JwqltWPxn7IZ" target="_blank"><img src="https://asciinema.org/a/knieOah4NfzX9JwqltWPxn7IZ.svg" width = "200" /></a>
+  </li>
+  </ol>
+  

@@ -3,9 +3,9 @@ import * as fs from 'fs';
 import { fileURLToPath } from 'url';
 
 import { expect, test } from '@jest/globals';
-import parse from '../src/parser.js';
-import formatter from '../src/formatter';
-import diff from '../src/diff.js';
+import parse from '../src/parser';
+import formatter from '../src/genDiff';
+import diff from '../src/buildDiff.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -16,37 +16,27 @@ const plainResult = fs.readFileSync(getFixturePath('results/plain.txt'), 'utf-8'
 const jsonResult = fs.readFileSync(getFixturePath('results/json.txt'), 'utf-8');
 const diffResult = JSON.parse(fs.readFileSync(getFixturePath('results/diffResult.txt'), 'utf-8'));
 
-// let jsonFilePath1;
-// let jsonFilePath2;
-// let yamlFilePath1;
-// let yamlFilePath2;
-// let emptyJSONFile;
-// let parsedConfig1;
-// let parsedConfig2;
-// let jsonFilesDiff;
-// let yamlFilesDiff;
-// let unsupportedConfig;
-
-// beforeAll(() => {
 const jsonFilePath2 = getFixturePath('config2.json');
 const jsonFilePath1 = getFixturePath('config1.json');
 const yamlFilePath1 = getFixturePath('config1.yml');
 const yamlFilePath2 = getFixturePath('config2.yaml');
 const emptyJSONFile = getFixturePath('emptyConfig.json');
+const jsonFileData1 = fs.readFileSync(jsonFilePath1, 'utf-8');
+const yamlFileData2 = fs.readFileSync(yamlFilePath2, 'utf-8');
 const parsedConfig1 = JSON.parse(fs.readFileSync(jsonFilePath1, 'utf-8'));
 const parsedConfig2 = JSON.parse(fs.readFileSync(jsonFilePath2, 'utf-8'));
 const jsonFilesDiff = diff(jsonFilePath1, jsonFilePath2);
 const yamlFilesDiff = diff(yamlFilePath1, yamlFilePath2);
-const unsupportedConfig = getFixturePath('unsupportedConfig.txt');
-// });
+const unsupportedConfig = fs.readFileSync(getFixturePath('unsupportedConfig.txt'), 'utf-8');
 
 test('parse test', () => {
   expect(() => parse()).toThrow();
-  expect(() => parse('')).toThrow('Can not read the file extention');
-  expect(() => parse(emptyJSONFile)).toThrow('Unexpected end of JSON input');
-  expect(() => parse(unsupportedConfig)).toThrow('Unsupported file extansion');
-  expect(parse(jsonFilePath1)).toEqual(parsedConfig1);
-  expect(parse(yamlFilePath2)).toEqual(parsedConfig2);
+  expect(() => parse('')).toThrow();
+  expect(() => parse(emptyJSONFile, 'json')).toThrow();
+  expect(() => parse(unsupportedConfig, '.txt')).toThrow();
+
+  expect(parse(jsonFileData1, 'json')).toEqual(parsedConfig1);
+  expect(parse(yamlFileData2, 'yaml')).toEqual(parsedConfig2);
 });
 
 test('diff test', () => {

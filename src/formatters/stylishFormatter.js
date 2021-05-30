@@ -1,5 +1,4 @@
-import nodeTypes from './nodeTypes.js';
-import diff from './diff.js';
+import nodeTypes from '../nodeTypes.js';
 
 const stringifyObject = (obj, depth = 1, filler = '  ') => {
   const entries = Object.entries(obj);
@@ -21,12 +20,6 @@ const stringifyKeyValue = (key, value, depth = 1) => {
     return `${key}: ${stringifyObject(value, depth + 1)}`;
   }
   return `${key}: ${value}`;
-};
-
-const convertValue = (value) => {
-  if (typeof value === 'string') return `'${value}'`;
-  if (typeof value === 'object' && value !== null) return '[complex value]';
-  return value;
 };
 
 const stylish = (filesDifference, depth = 1, filler = '  ') => {
@@ -52,35 +45,4 @@ const stylish = (filesDifference, depth = 1, filler = '  ') => {
   });
   return `{\n${result.join('\n')}\n${filler.repeat(depth - 1)}}`;
 };
-
-const plain = (filesDifference, parentKey = '') => {
-  const result = filesDifference
-    .filter(({ status, children }) => status !== nodeTypes.equal || children)
-    .map(({
-      key, status, value, previousValue, children,
-    }) => {
-      switch (status) {
-        case nodeTypes.removed:
-          return `Property '${parentKey}${key}' was ${status}`;
-        case nodeTypes.updated:
-          return `Property '${parentKey}${key}' was ${status}. From ${convertValue(
-            previousValue,
-          )} to ${convertValue(value)}`;
-        case nodeTypes.nested:
-          return plain(children, `${parentKey}${key}.`);
-        case nodeTypes.added:
-          return `Property '${parentKey}${key}' was ${status} with value: ${convertValue(value)}`;
-        default:
-          throw new Error('Unknown node type');
-      }
-    });
-  return result.join('\n');
-};
-
-const json = (filesDifference) => JSON.stringify(filesDifference, null, 2);
-
-export default (file1, file2, option = 'stylish') => ({
-  stylish,
-  plain,
-  json,
-})[option](diff(file1, file2));
+export default stylish;

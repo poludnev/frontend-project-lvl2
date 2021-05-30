@@ -1,21 +1,7 @@
-import * as fs from 'fs';
-import * as path from 'path';
-import yaml from 'js-yaml';
+import json from './parsers/jsonParser.js';
+import yaml from './parsers/yamlParser.js';
 
-export default (file) => {
-  const fileExtName = path.extname(file);
-  if (!fileExtName) throw new Error('Can not read the file extention');
-  const currentDirectoryPath = process.cwd();
-  const filePath = path.resolve(currentDirectoryPath, file);
-  const fileContent = fs.readFileSync(filePath, 'utf-8');
-
-  switch (fileExtName) {
-    case '.json':
-      return JSON.parse(fileContent);
-    case '.yaml':
-    case '.yml':
-      return yaml.load(fileContent);
-    default:
-      throw new Error('Unsupported file extansion');
-  }
-};
+export default (data, format) => ({
+  json,
+  yaml,
+})[format](data);

@@ -22,8 +22,10 @@
   <li>Easy to maintain</li>
   </ol>
 
-<p>See the help. Run:</p>
-$ gendiff -h
+<h3>Usage</h3>
+
+<p>See the help. Run:<br>
+$ gendiff -h</p>
 <br>
 <br>
 <a href="https://asciinema.org/a/ONpoH10eoHa7z9LGsqtsXb6F4" target="_blank"><img src="https://asciinema.org/a/ONpoH10eoHa7z9LGsqtsXb6F4.svg" width = "200" /></a>

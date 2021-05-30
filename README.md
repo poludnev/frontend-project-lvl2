@@ -1,12 +1,6 @@
-<link rel="preconnect" href="https://fonts.gstatic.com">
-<link href="https://fonts.googleapis.com/css2?family=Open+Sans&family=Roboto&display=swap" rel="stylesheet">
-<style>
-  h1 {
-font-family: 'Roboto', sans-serif;
-  }
-  </style>
 
-<h1 style="font-family: 'Roboto', sans-serif;">GenDiff</h1>
+
+<h1>GenDiff</h1>
 <h2>Compare your configuration files</h2>
 <h3>
 <a href="https://github.com/poludnev/frontend-project-lvl2/actions">

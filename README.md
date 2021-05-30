@@ -2,6 +2,11 @@
 [![Actions Status](https://github.com/poludnev/frontend-project-lvl2/workflows/hexlet-check/badge.svg)](https://github.com/poludnev/frontend-project-lvl2/actions)
 <br>
 [![Node CI](https://github.com/poludnev/frontend-project-lvl2/actions/workflows/github-actions-demo.yml/badge.svg)](https://github.com/poludnev/frontend-project-lvl2/actions/workflows/github-actions-demo.yml)
+<br>
+<a href="https://github.com/poludnev/frontend-project-lvl2/actions">
+  <img src="https://github.com/poludnev/frontend-project-lvl2/workflows/hexlet-check/badge.svg" />
+</a>
+<br>
 <a href="https://github.com/poludnev/frontend-project-lvl2/actions/workflows/github-actions-demo.yml">
   <img src="https://github.com/poludnev/frontend-project-lvl2/actions/workflows/github-actions-demo.yml/badge.svg" />
 </a>

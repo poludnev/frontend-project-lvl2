@@ -4,7 +4,7 @@ import { fileURLToPath } from 'url';
 
 import { expect, test } from '@jest/globals';
 import parse from '../src/parser';
-import formatter from '../src/genDiff';
+import formatter from '../src/genDiff.js';
 import diff from '../src/buildDiff.js';
 
 const __filename = fileURLToPath(import.meta.url);
@@ -22,11 +22,18 @@ const yamlFilePath1 = getFixturePath('config1.yml');
 const yamlFilePath2 = getFixturePath('config2.yaml');
 const emptyJSONFile = getFixturePath('emptyConfig.json');
 const jsonFileData1 = fs.readFileSync(jsonFilePath1, 'utf-8');
+const jsonFileData2 = fs.readFileSync(jsonFilePath2, 'utf-8');
 const yamlFileData2 = fs.readFileSync(yamlFilePath2, 'utf-8');
+const yamlFileData1 = fs.readFileSync(yamlFilePath1, 'utf-8');
 const parsedConfig1 = JSON.parse(fs.readFileSync(jsonFilePath1, 'utf-8'));
 const parsedConfig2 = JSON.parse(fs.readFileSync(jsonFilePath2, 'utf-8'));
-const jsonFilesDiff = diff(jsonFilePath1, jsonFilePath2);
-const yamlFilesDiff = diff(yamlFilePath1, yamlFilePath2);
+const data1 = parse(jsonFileData1, 'json');
+const data2 = parse(jsonFileData2, 'json');
+const data3 = parse(yamlFileData1, 'yaml');
+const data4 = parse(yamlFileData2, 'yaml');
+
+const jsonFilesDiff = diff(data1, data2);
+const yamlFilesDiff = diff(data3, data4);
 const unsupportedConfig = fs.readFileSync(getFixturePath('unsupportedConfig.txt'), 'utf-8');
 
 test('parse test', () => {

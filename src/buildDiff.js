@@ -50,7 +50,6 @@ const buildDifference = (data1, data2) => {
         throw new Error('Unable get difference');
     }
   });
-
   return difference;
 };
 

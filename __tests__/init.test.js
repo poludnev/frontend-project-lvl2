@@ -41,7 +41,6 @@ test('parse test', () => {
   expect(() => parse('')).toThrow();
   expect(() => parse(emptyJSONFile, 'json')).toThrow();
   expect(() => parse(unsupportedConfig, '.txt')).toThrow();
-
   expect(parse(jsonFileData1, 'json')).toEqual(parsedConfig1);
   expect(parse(yamlFileData2, 'yaml')).toEqual(parsedConfig2);
 });

@@ -3,7 +3,7 @@ import * as path from 'path';
 import diff from './buildDiff.js';
 import parse from './parser.js';
 import dataTypes from './dataTypes.js';
-import formatters from './formatters/formatters';
+import formatters from './formatters/formatters.js';
 
 const getDataType = (fileExtension, dataTypesList) => {
   if (!dataTypesList[fileExtension]) throw new Error('Unknown file extension');

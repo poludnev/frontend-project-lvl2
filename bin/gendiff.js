@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 import commander from 'commander';
-import formatter from '../src/genDiff.js';
+import genDiff from '../src/genDiff.js';
 
 const program = new commander.Command();
 
@@ -12,7 +12,7 @@ program
   .helpOption('-h, --help', 'output usage information')
   .option('-f, --format [type]', 'output format', 'stylish')
   .action((file1, file2, option) => {
-    console.log(formatter(file1, file2, option.format));
+    console.log(genDiff(file1, file2, option.format));
   });
 
 program.parse(process.argv);

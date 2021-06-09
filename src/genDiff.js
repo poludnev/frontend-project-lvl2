@@ -1,13 +1,9 @@
 import * as fs from 'fs';
 import * as path from 'path';
 import diff from './buildDiff.js';
-import stylish from './formatters/stylishFormatter.js';
-import plain from './formatters/plainFormatter.js';
-import json from './formatters/jsonFormatter.js';
 import parse from './parser.js';
 import dataTypes from './dataTypes.js';
-
-const formatters = { stylish, plain, json };
+import formatters from './formatters/formatters';
 
 const getDataType = (fileExtension, dataTypesList) => {
   if (!dataTypesList[fileExtension]) throw new Error('Unknown file extension');

@@ -1,12 +1,18 @@
-import json from './parsers/jsonParser.js';
-import yaml from './parsers/yamlParser.js';
+import yaml from 'js-yaml';
+import dataTypes from './dataTypes.js';
 
 const parsers = {
-  json,
-  yaml,
+  json: (data) => JSON.parse(data),
+  yaml: (data) => yaml.load(data),
 };
 
-export default (data, format) => {
-  const parse = parsers[format];
+const getDataType = (fileExtension, dataTypesList) => {
+  if (!dataTypesList[fileExtension]) throw new Error('Unknown file extension');
+  return dataTypesList[fileExtension];
+};
+
+export default (data, extension) => {
+  const dataType = getDataType(extension, dataTypes);
+  const parse = parsers[dataType];
   return parse(data);
 };

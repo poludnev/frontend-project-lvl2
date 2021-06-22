@@ -1,5 +1,12 @@
 import _ from 'lodash';
-import nodeTypes from './nodeTypes.js';
+
+export const nodeTypes = {
+  equal: 'equal',
+  updated: 'updated',
+  removed: 'removed',
+  added: 'added',
+  nested: 'nested',
+};
 
 const buildDifference = (data1, data2) => {
   const fileKeys1 = Object.keys(data1);

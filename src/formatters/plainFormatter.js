@@ -1,4 +1,4 @@
-import nodeTypes from '../nodeTypes.js';
+import { nodeTypes } from '../buildDiff.js';
 
 const convertValue = (value) => {
   if (typeof value === 'string') return `'${value}'`;

@@ -1,4 +1,4 @@
-import nodeTypes from '../nodeTypes.js';
+import { nodeTypes } from '../buildDiff.js';
 
 const stringifyObject = (obj, depth = 1, filler = '  ') => {
   const entries = Object.entries(obj);

@@ -1,5 +1,10 @@
 import yaml from 'js-yaml';
-import dataTypes from './dataTypes.js';
+
+const dataTypes = {
+  '.json': 'json',
+  '.yaml': 'yaml',
+  '.yml': 'yaml',
+};
 
 const parsers = {
   json: (data) => JSON.parse(data),

@@ -1,7 +1,7 @@
 import * as path from 'path';
-import diff from './buildDiff.js';
+import buildDifferenceTree from './buildDiff.js';
 import parse from './parser.js';
-import formatters from './formatters/formatters.js';
+import { formate } from './formatters/formatters.js';
 import { readFile } from './utils.js';
 
 export default (filepath1, filepath2, formatName = 'stylish') => {
@@ -17,6 +17,6 @@ export default (filepath1, filepath2, formatName = 'stylish') => {
   const data1 = parse(fileContent1, extension1);
   const data2 = parse(fileContent2, extension2);
 
-  const difference = diff(data1, data2);
-  return formatters[formatName](difference);
+  const differenceTree = buildDifferenceTree(data1, data2);
+  return formate(differenceTree, formatName);
 };

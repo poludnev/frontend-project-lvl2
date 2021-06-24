@@ -6,10 +6,9 @@ const formatters = {
   stylish,
   plain,
   json,
-}
+};
 
-export const formate = (tree, formatName) => {
+export default (tree, formatName) => {
   const formatter = formatters[formatName];
   return formatter(tree);
-
 };

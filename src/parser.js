@@ -1,4 +1,5 @@
 import yaml from 'js-yaml';
+import _ from 'lodash';
 
 const parsers = {
   json: (data) => JSON.parse(data),
@@ -6,7 +7,7 @@ const parsers = {
 };
 
 export default (data, dataType) => {
-  if (!parsers.hasOwnProperty(dataType)) throw new Error('Unknown data typa');
+  if (!_.has(parsers, dataType)) throw new Error('Unknown data typa');
   const parse = parsers[dataType];
   return parse(data);
 };

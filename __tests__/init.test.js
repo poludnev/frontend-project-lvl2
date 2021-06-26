@@ -33,7 +33,18 @@ const argsToPass = [
   },
 ];
 
-test.each(argsToPass)('$expectedPath', ({ args, expectedPath }) => {
+test.each(argsToPass)('$args', ({ args, expectedPath }) => {
   const expected = readFile(expectedPath);
+  expect(genDiff(...args)).toEqual(expected);
+});
+
+test.each`
+  args | styleName
+  ${[jsonFilePath1, jsonFilePath2]} | ${'stylish'}
+  ${[yamlFilePath1, yamlFilePath2, 'plain']} | ${'plain'}
+  ${[yamlFilePath1, jsonFilePath2, 'json']} | ${'json'}
+`('when foramt is $styleName', ({ args, styleName }) => {
+  const resultsPath = getFixturePath(`results/${styleName}.txt`);
+  const expected = readFile(resultsPath);
   expect(genDiff(...args)).toEqual(expected);
 });

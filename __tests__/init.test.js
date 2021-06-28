@@ -15,7 +15,7 @@ test.each`
   ${[jsonFilePath1, '']} | ${'EISDIR'} | ${'wrong filepath2'}
   ${['', '']} | ${'EISDIR'} | ${'wrong filepath1 and filepath2'}
   ${[jsonFilePath1, jsonFilePath2, 'txt']} | ${'Unsupported output format'} | ${'wrong format'}
-  ${[jsonFilePath1, unsupportedFilePath]} | ${'Unknown file extension'} | ${'wrong extension'}
+  ${[jsonFilePath1, unsupportedFilePath]} | ${'Unsupported data type'} | ${'wrong extension'}
 `('Edge-case: $case', ({ args, error }) => {
   expect(() => genDiff(...args)).toThrow(error);
 });

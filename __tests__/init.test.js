@@ -10,32 +10,14 @@ const yamlFilePath1 = getFixturePath('config1.yml');
 const yamlFilePath2 = getFixturePath('config2.yaml');
 const unsupportedFilePath = getFixturePath('unsupportedConfig.txt');
 
-const argsTofail = [
-  [jsonFilePath1, ''],
-  ['', ''],
-  [jsonFilePath1, jsonFilePath2, 'txt'],
-  [jsonFilePath1, unsupportedFilePath],
-];
-
-test.each(argsTofail)('to-fail-case #%#', (args) => {
-  expect(() => genDiff(...args)).toThrow();
-});
-
-const argsToPass = [
-  {
-    args: [jsonFilePath1, jsonFilePath2], expectedPath: getFixturePath('results/stylish.txt'),
-  },
-  {
-    args: [yamlFilePath1, yamlFilePath2, 'plain'], expectedPath: getFixturePath('results/plain.txt'),
-  },
-  {
-    args: [yamlFilePath1, jsonFilePath2, 'json'], expectedPath: getFixturePath('results/json.txt'),
-  },
-];
-
-test.each(argsToPass)('$args', ({ args, expectedPath }) => {
-  const expected = readFile(expectedPath);
-  expect(genDiff(...args)).toEqual(expected);
+test.each`
+  args | error | case
+  ${[jsonFilePath1, '']} | ${'EISDIR'} | ${'wrong filepath2'}
+  ${['', '']} | ${'EISDIR'} | ${'wrong filepath1 and filepath2'}
+  ${[jsonFilePath1, jsonFilePath2, 'txt']} | ${'Unsupported output format'} | ${'wrong format'}
+  ${[jsonFilePath1, unsupportedFilePath]} | ${'Unknown file extension'} | ${'wrong extension'}
+`('Edge-case: $case', ({ args, error }) => {
+  expect(() => genDiff(...args)).toThrow(error);
 });
 
 test.each`
@@ -43,7 +25,7 @@ test.each`
   ${[jsonFilePath1, jsonFilePath2]} | ${'stylish'}
   ${[yamlFilePath1, yamlFilePath2, 'plain']} | ${'plain'}
   ${[yamlFilePath1, jsonFilePath2, 'json']} | ${'json'}
-`('when foramt is $styleName', ({ args, styleName }) => {
+`('When foramt is $styleName', ({ args, styleName }) => {
   const resultsPath = getFixturePath(`results/${styleName}.txt`);
   const expected = readFile(resultsPath);
   expect(genDiff(...args)).toEqual(expected);

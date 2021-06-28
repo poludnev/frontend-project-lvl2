@@ -9,6 +9,7 @@ const formatters = {
 };
 
 export default (tree, formatName) => {
-  const formatter = formatters[formatName];
-  return formatter(tree);
+  const format = formatters[formatName];
+  if (!format) throw new Error(`Unsupported output format: ${formatName}`);
+  return format(tree);
 };

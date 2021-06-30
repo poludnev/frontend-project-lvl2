@@ -1,7 +1,6 @@
 <link rel="preconnect" href="https://fonts.gstatic.com">
 <link href="https://fonts.googleapis.com/css2?family=Open+Sans&family=Roboto&display=swap" rel="stylesheet">
 
-
 <h1>GenDiff</h1>
 <h2>Compare your configuration files</h2>
 <h3>
@@ -25,6 +24,10 @@
   <li>Easy to use</li>
   <li>Easy to maintain</li>
 </ol>
+
+<h3>Setup</h3>
+<p>$ make install</p>
+<a href="https://asciinema.org/a/vAHaySYxGxPfNQLJGzRY51fJ1" target="_blank"><img src="https://asciinema.org/a/vAHaySYxGxPfNQLJGzRY51fJ1.svg" width = "200" /></a>
 
 <h3>Usage</h3>
 <ol>
@@ -52,4 +55,3 @@
     <a href="https://asciinema.org/a/knieOah4NfzX9JwqltWPxn7IZ" target="_blank"><img src="https://asciinema.org/a/knieOah4NfzX9JwqltWPxn7IZ.svg" width = "200" /></a>
   </li>
   </ol>
-  

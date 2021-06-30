@@ -1,2 +1,2 @@
-const json = (filesDifference) => JSON.stringify(filesDifference, null, 2);
+const json = (filesDifference) => JSON.stringify(filesDifference);
 export default json;

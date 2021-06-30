@@ -15,22 +15,22 @@ const buildDifference = (data1, data2) => {
   const difference = commonKeys.map((key) => {
     switch (true) {
       case !_.has(data2, key):
-        return { key, status: nodeTypes.removed, value: data1[key] };
+        return { key, status: nodeTypes.removed, value1: data1[key] };
       case !_.has(data1, key):
-        return { key, status: nodeTypes.added, value: data2[key] };
+        return { key, status: nodeTypes.added, value1: data2[key] };
       case _.isPlainObject(data1[key]) && _.isPlainObject(data2[key]):
         return {
           key,
           status: nodeTypes.nested,
-          value: null,
+          value1: null,
           children: buildDifference(data1[key],
             data2[key]),
         };
       case _.isEqual(data1[key], data2[key]):
-        return { key, status: nodeTypes.equal, value: data1[key] };
+        return { key, status: nodeTypes.equal, value1: data1[key] };
       case data1[key] !== data2[key]:
         return {
-          key, status: nodeTypes.updated, value: data2[key], previousValue: data1[key],
+          key, status: nodeTypes.updated, value1: data2[key], value2: data1[key],
         };
       default:
         throw new Error('Unable get difference');

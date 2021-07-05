@@ -31,4 +31,4 @@ const plain = (filesDifference, parentKey = '') => {
   return result.join('\n');
 };
 
-export default plain;
+export default (filesDifference) => plain(filesDifference);

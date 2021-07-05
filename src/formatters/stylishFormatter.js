@@ -14,14 +14,14 @@ const stringifyObject = (obj, depth = 1) => {
   return `{\n${result.join('\n')}\n${makeFiller(depth)}}`;
 };
 
-const stringifyKeyValue = (key, value, depth = 1) => {
+const stringifyValue = (value, depth) => {
   if (value instanceof Array) {
-    return `${key}: [${value.join(', ')}]`;
+    return `[${value.join(', ')}]`;
   }
   if (value instanceof Object) {
-    return `${key}: ${stringifyObject(value, depth + 1)}`;
+    return `${stringifyObject(value, depth + 1)}`;
   }
-  return `${key}: ${value}`;
+  return `${value}`;
 };
 
 const stylish = (filesDifference, depth = 1) => {
@@ -31,19 +31,19 @@ const stylish = (filesDifference, depth = 1) => {
   }) => {
     switch (status) {
       case nodeTypes.added:
-        return `${basicFiller}+ ${stringifyKeyValue(key, value1, depth)}`;
+        return `${basicFiller}+ ${key}: ${stringifyValue(value1, depth)}`;
       case nodeTypes.removed:
-        return `${basicFiller}- ${stringifyKeyValue(key, value1, depth)}`;
+        return `${basicFiller}- ${key}: ${stringifyValue(value1, depth)}`;
       case nodeTypes.updated:
-        return `${basicFiller}- ${stringifyKeyValue(key, value2, depth)}\n${basicFiller}+ ${stringifyKeyValue(key, value1, depth)}`;
+        return `${basicFiller}- ${key}: ${stringifyValue(value2, depth)}\n${basicFiller}+ ${key}: ${stringifyValue(value1, depth)}`;
       case nodeTypes.nested:
         return `${basicFiller}  ${key}: ${stylish(children, depth + 2)}`;
       case nodeTypes.equal:
-        return `${basicFiller}  ${stringifyKeyValue(key, value1, depth)}`;
+        return `${basicFiller}  ${key}: ${stringifyValue(value1, depth)}`;
       default:
         throw new Error(`Unknown node type: ${status}`);
     }
   });
   return `{\n${result.join('\n')}\n${makeFiller(depth - 1)}}`;
 };
-export default stylish;
+export default (filesDifference) => stylish(filesDifference);

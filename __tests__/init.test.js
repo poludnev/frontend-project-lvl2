@@ -23,6 +23,7 @@ test.each`
 test.each`
   args | styleName
   ${[jsonFilePath1, jsonFilePath2]} | ${'stylish'}
+  ${[yamlFilePath1, yamlFilePath2, 'stylish']} | ${'stylish'}
   ${[yamlFilePath1, yamlFilePath2, 'plain']} | ${'plain'}
   ${[yamlFilePath1, jsonFilePath2, 'json']} | ${'json'}
 `('When foramt is $styleName', ({ args, styleName }) => {
